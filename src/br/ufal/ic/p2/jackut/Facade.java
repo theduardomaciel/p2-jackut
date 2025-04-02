@@ -1,5 +1,7 @@
 package br.ufal.ic.p2.jackut;
 
+import br.ufal.ic.p2.jackut.exceptions.*;
+
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,14 +44,14 @@ public class Facade {
      * @param login O login do novo usuário.
      * @param senha A senha do novo usuário.
      * @param nome O nome do novo usuário.
-     * @throws RuntimeException Se o login já estiver em uso.
+     * @throws AcaoProibidaException Se o login já estiver em uso.
      */
     public void criarUsuario(String login, String senha, String nome) {
         validarLogin(login);
         validarSenha(senha);
 
         if (usuarios.containsKey(login)) {
-            throw new RuntimeException("Conta com esse nome já existe.");
+            throw new AcaoProibidaException("Conta com esse nome já existe.");
         }
 
         Usuario novoUsuario = new Usuario(login, senha, nome);
@@ -60,13 +62,13 @@ public class Facade {
 
     private void validarLogin(String login) {
         if (login == null || login.trim().isEmpty()) {
-            throw new RuntimeException("Login inválido.");
+            throw new LoginInvalidoException();
         }
     }
 
     private void validarSenha(String senha) {
         if (senha == null || senha.trim().isEmpty()) {
-            throw new RuntimeException("Senha inválida.");
+            throw new SenhaInvalidaException();
         }
     }
 
@@ -76,14 +78,14 @@ public class Facade {
      * @param login O login do usuário.
      * @param senha A senha do usuário.
      * @return O ID da sessão criada.
-     * @throws RuntimeException Se o login ou a senha forem inválidos.
+     * @throws LoginInvalidoException Se o login ou a senha forem inválidos.
      */
     public String abrirSessao(String login, String senha) {
         if (login == null || login.trim().isEmpty() ||
                 senha == null || senha.trim().isEmpty() ||
                 !usuarios.containsKey(login) ||
                 !usuarios.get(login).getSenha().equals(senha)) {
-            throw new RuntimeException("Login ou senha inválidos.");
+            throw new LoginInvalidoException();
         }
 
         String idSessao = "sessao" + (++contadorSessao);
@@ -97,11 +99,11 @@ public class Facade {
      * @param login O login do usuário.
      * @param atributo O nome do atributo.
      * @return O valor do atributo.
-     * @throws RuntimeException Se o usuário não estiver cadastrado.
+     * @throws UsuarioNaoCadastradoException Se o usuário não estiver cadastrado.
      */
     public String getAtributoUsuario(String login, String atributo) {
         if (!usuarios.containsKey(login)) {
-            throw new RuntimeException("Usuário não cadastrado.");
+            throw new UsuarioNaoCadastradoException();
         }
 
         Usuario usuario = usuarios.get(login);
@@ -114,11 +116,11 @@ public class Facade {
      * @param id O ID da sessão do usuário.
      * @param atributo O nome do atributo a ser editado.
      * @param valor O novo valor do atributo.
-     * @throws RuntimeException Se o usuário não estiver cadastrado.
+     * @throws UsuarioNaoCadastradoException Se o usuário não estiver cadastrado.
      */
     public void editarPerfil(String id, String atributo, String valor) {
         if (!sessoes.containsKey(id)) {
-            throw new RuntimeException("Usuário não cadastrado.");
+            throw new UsuarioNaoCadastradoException();
         }
 
         String login = sessoes.get(id);
@@ -132,28 +134,31 @@ public class Facade {
      *
      * @param id O ID da sessão do usuário.
      * @param amigoLogin O login do amigo a ser adicionado.
-     * @throws RuntimeException Se o usuário ou o amigo não estiverem cadastrados, ou se já forem amigos.
+     * @throws UsuarioNaoCadastradoException Se o usuário ou o amigo não estiverem cadastrados.
+     * @throws AcaoProibidaException Se o usuário ou o amigo não estiverem cadastrados, ou se já forem amigos.
      */
     public void adicionarAmigo(String id, String amigoLogin) {
+        // Verificamos se o ID da sessão é válido
         if (!sessoes.containsKey(id)) {
-            throw new RuntimeException("Usuário não cadastrado.");
+            throw new UsuarioNaoCadastradoException();
         }
 
         String login = sessoes.get(id);
 
         if (login.equals(amigoLogin)) {
-            throw new RuntimeException("Usuário não pode adicionar a si mesmo como amigo.");
+            throw new AcaoProibidaException("Usuário não pode adicionar a si mesmo como amigo.");
         }
 
+        // Verificamos se o amigo existe
         if (!usuarios.containsKey(amigoLogin)) {
-            throw new RuntimeException("Usuário não cadastrado.");
+            throw new UsuarioNaoCadastradoException();
         }
 
         Usuario usuario = usuarios.get(login);
         Usuario amigo = usuarios.get(amigoLogin);
 
         if (usuario.ehAmigo(amigoLogin)) {
-            throw new RuntimeException("Usuário já está adicionado como amigo.");
+            throw new AcaoProibidaException("Usuário já está adicionado como amigo.");
         }
 
         // Verificamos se o outro usuário já enviou convite
@@ -167,7 +172,7 @@ public class Facade {
 
         // Verificamos se já enviou convite antes
         if (usuario.verificarConvitePendente(amigoLogin)) {
-            throw new RuntimeException("Usuário já está adicionado como amigo, esperando aceitação do convite.");
+            throw new AcaoProibidaException("Usuário já está adicionado como amigo, esperando aceitação do convite.");
         }
 
         // Enviamos o convite
@@ -196,11 +201,11 @@ public class Facade {
      *
      * @param login O login do usuário.
      * @return A lista de amigos no formato de string.
-     * @throws RuntimeException Se o usuário não estiver cadastrado.
+     * @throws UsuarioNaoCadastradoException Se o usuário não estiver cadastrado.
      */
     public String getAmigos(String login) {
         if (!usuarios.containsKey(login)) {
-            throw new RuntimeException("Usuário não cadastrado.");
+            throw new UsuarioNaoCadastradoException();
         }
 
         Usuario usuario = usuarios.get(login);
@@ -219,12 +224,13 @@ public class Facade {
      * @param id O ID da sessão do remetente.
      * @param destinatario O login do destinatário.
      * @param mensagem A mensagem do recado.
-     * @throws RuntimeException Se o remetente ou o destinatário não estiverem cadastrados, ou se o remetente tentar enviar um recado para si mesmo.
+     * @throws UsuarioNaoCadastradoException Se o destinatário não estiver cadastrado.
+     * @throws AcaoProibidaException Se o usuário tentar enviar um recado para si mesmo.
      */
     public void enviarRecado(String id, String destinatario, String mensagem) {
         // Verificamos se o ID da sessão é válido
         if (!sessoes.containsKey(id)) {
-            throw new RuntimeException("Usuário não cadastrado.");
+            throw new UsuarioNaoCadastradoException();
         }
 
         // Obtemos o login do remetente
@@ -232,12 +238,12 @@ public class Facade {
 
         // Verificamos se o destinatário existe
         if (!usuarios.containsKey(destinatario)) {
-            throw new RuntimeException("Usuário não cadastrado.");
+            throw new UsuarioNaoCadastradoException();
         }
 
         // Verificamos se o usuário está tentando enviar um recado para si mesmo
         if (loginRemetente.equals(destinatario)) {
-            throw new RuntimeException("Usuário não pode enviar recado para si mesmo.");
+            throw new AcaoProibidaException("Usuário não pode enviar recado para si mesmo.");
         }
 
         // Em seguida, enviamos o recado ao destinatário
@@ -253,13 +259,14 @@ public class Facade {
      *
      * @param id O ID da sessão do usuário.
      * @return A mensagem do recado.
-     * @throws RuntimeException Se o usuário não estiver cadastrado ou se não houver recados.
+     * @throws UsuarioNaoCadastradoException Se o usuário não estiver cadastrado
+     * @throws RecursoNaoEncontradoException Se não houver recados.
      */
     public String lerRecado(String id) {
         // Verificamos se o ID da sessão é válido
         if (!sessoes.containsKey(id)) {
             // Caso não, o usuário não está cadastrado
-            throw new RuntimeException("Usuário não cadastrado.");
+            throw new UsuarioNaoCadastradoException();
         }
 
         // Obtemos o login do usuário
@@ -271,7 +278,7 @@ public class Facade {
 
         // Se não houver recados, lançamos uma exceção
         if (recado == null) {
-            throw new RuntimeException("Não há recados.");
+            throw new RecursoNaoEncontradoException("Não há recados.");
         }
 
         // Salvamos os dados atualizados após a leitura do recado

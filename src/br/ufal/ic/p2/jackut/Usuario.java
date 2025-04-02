@@ -1,5 +1,7 @@
 package br.ufal.ic.p2.jackut;
 
+import br.ufal.ic.p2.jackut.exceptions.RecursoNaoEncontradoException;
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -45,7 +47,7 @@ public class Usuario implements Serializable {
      *
      * @param atributo O nome do atributo.
      * @return O valor do atributo.
-     * @throws RuntimeException Se o atributo não estiver preenchido.
+     * @throws RecursoNaoEncontradoException Se o atributo não estiver preenchido.
      */
     public String getAtributo(String atributo) {
         if (atributo.equalsIgnoreCase("nome")) {
@@ -53,7 +55,7 @@ public class Usuario implements Serializable {
         }
 
         if (!atributos.containsKey(atributo.toLowerCase())) {
-            throw new RuntimeException("Atributo não preenchido.");
+            throw new RecursoNaoEncontradoException("Atributo não preenchido.");
         }
 
         return atributos.get(atributo.toLowerCase());
