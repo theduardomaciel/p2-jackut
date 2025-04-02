@@ -83,12 +83,10 @@ public class Facade {
         String login = sessoes.get(id);
         Usuario usuario = usuarios.get(login);
 
-        switch (atributo.toLowerCase()) {
-            case "nome":
-                usuario.setNome(valor);
-                break;
-            default:
-                throw new RuntimeException("Atributo não encontrado.");
+        if (atributo.equalsIgnoreCase("nome")) {
+            usuario.setNome(valor);
+        } else {
+            throw new RuntimeException("Atributo não encontrado.");
         }
         salvarDados();
     }
