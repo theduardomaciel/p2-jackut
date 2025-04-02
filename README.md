@@ -1,5 +1,8 @@
 # Projeto: Rede de Relacionamentos Jackut
 
+> [!INFO]
+> As entregas das milestones estão disponíveis no [diretório `docs`](https://github.com/theduardomaciel/p2-jackut/tree/master/docs) do repositório.
+
 ## Descrição
 O Jackut é um sistema que mantém uma rede de relacionamentos, nos moldes de uma série de outras que há na internet hoje em dia (Orkut, Friendster, etc.). Ele é particularmente inspirado no Orkut (www.orkut.com).  
 A funcionalidade desejada do Jackut está descrita em User Stories (Use Cases informais). Cada Story descreve uma interação que o sistema deve suportar.  
@@ -86,9 +89,7 @@ Para permitir a execução dos testes de aceitação, será necessário implemen
 
 ---
 
-## **Primeiro Milestone**
-
-Os alunos devem implementar as **User Stories 1 a 4**.
+## **Primeiro Milestone** (User Stories de 1 a 4)
 
 ### **Itens a serem entregues:**
 - Código-fonte documentado.
