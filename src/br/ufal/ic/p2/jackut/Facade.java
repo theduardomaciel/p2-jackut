@@ -149,11 +149,55 @@ public class Facade {
     }
 
     public void enviarRecado(String id, String destinatario, String mensagem) {
-        throw new RuntimeException("Funcionalidade não implementada.");
+        // Verificamos se o ID da sessão é válido
+        if (!sessoes.containsKey(id)) {
+            throw new RuntimeException("Usuário não cadastrado.");
+        }
+
+        // Obtemos o login do remetente
+        String loginRemetente = sessoes.get(id);
+
+        // Verificamos se o destinatário existe
+        if (!usuarios.containsKey(destinatario)) {
+            throw new RuntimeException("Usuário não cadastrado.");
+        }
+
+        // Verificamos se o usuário está tentando enviar um recado para si mesmo
+        if (loginRemetente.equals(destinatario)) {
+            throw new RuntimeException("Usuário não pode enviar recado para si mesmo.");
+        }
+
+        // Em seguida, enviamos o recado ao destinatário
+        Usuario usuarioDestinatario = usuarios.get(destinatario);
+        usuarioDestinatario.adicionarRecado(mensagem);
+
+        // E salvamos os dados atualizados
+        salvarDados();
     }
 
     public String lerRecado(String id) {
-        throw new RuntimeException("Funcionalidade não implementada.");
+        // Verificamos se o ID da sessão é válido
+        if (!sessoes.containsKey(id)) {
+            // Caso não, o usuário não está cadastrado
+            throw new RuntimeException("Usuário não cadastrado.");
+        }
+
+        // Obtemos o login do usuário
+        String login = sessoes.get(id);
+        Usuario usuario = usuarios.get(login);
+
+        // Lemos o próximo recado da fila
+        String recado = usuario.lerRecado();
+
+        // Se não houver recados, lançamos uma exceção
+        if (recado == null) {
+            throw new RuntimeException("Não há recados.");
+        }
+
+        // Salvamos os dados atualizados após a leitura do recado
+        salvarDados();
+
+        return recado;
     }
 
     public void encerrarSistema() {
