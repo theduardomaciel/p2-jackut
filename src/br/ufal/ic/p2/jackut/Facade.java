@@ -18,6 +18,9 @@ public class Facade {
         carregarDados();
     }
 
+    /**
+     * Reseta o sistema, limpando todos os dados de usuários e sessões.
+     */
     public void zerarSistema() {
         usuarios.clear();
         sessoes.clear();
@@ -25,6 +28,14 @@ public class Facade {
         salvarDados();
     }
 
+    /**
+     * Cria um novo usuário no sistema.
+     *
+     * @param login O login do novo usuário.
+     * @param senha A senha do novo usuário.
+     * @param nome O nome do novo usuário.
+     * @throws RuntimeException Se o login já estiver em uso.
+     */
     public void criarUsuario(String login, String senha, String nome) {
         validarLogin(login);
         validarSenha(senha);
@@ -50,6 +61,14 @@ public class Facade {
         }
     }
 
+    /**
+     * Abre uma sessão para um usuário existente.
+     *
+     * @param login O login do usuário.
+     * @param senha A senha do usuário.
+     * @return O ID da sessão criada.
+     * @throws RuntimeException Se o login ou a senha forem inválidos.
+     */
     public String abrirSessao(String login, String senha) {
         if (login == null || login.trim().isEmpty() ||
                 senha == null || senha.trim().isEmpty() ||
@@ -63,6 +82,14 @@ public class Facade {
         return idSessao;
     }
 
+    /**
+     * Obtém um atributo de um usuário.
+     *
+     * @param login O login do usuário.
+     * @param atributo O nome do atributo.
+     * @return O valor do atributo.
+     * @throws RuntimeException Se o usuário não estiver cadastrado.
+     */
     public String getAtributoUsuario(String login, String atributo) {
         if (!usuarios.containsKey(login)) {
             throw new RuntimeException("Usuário não cadastrado.");
@@ -72,6 +99,14 @@ public class Facade {
         return usuario.getAtributo(atributo);
     }
 
+    /**
+     * Edita o perfil de um usuário.
+     *
+     * @param id O ID da sessão do usuário.
+     * @param atributo O nome do atributo a ser editado.
+     * @param valor O novo valor do atributo.
+     * @throws RuntimeException Se o usuário não estiver cadastrado.
+     */
     public void editarPerfil(String id, String atributo, String valor) {
         if (!sessoes.containsKey(id)) {
             throw new RuntimeException("Usuário não cadastrado.");
@@ -83,6 +118,13 @@ public class Facade {
         salvarDados();
     }
 
+    /**
+     * Adiciona um amigo para um usuário.
+     *
+     * @param id O ID da sessão do usuário.
+     * @param amigoLogin O login do amigo a ser adicionado.
+     * @throws RuntimeException Se o usuário ou o amigo não estiverem cadastrados, ou se já forem amigos.
+     */
     public void adicionarAmigo(String id, String amigoLogin) {
         if (!sessoes.containsKey(id)) {
             throw new RuntimeException("Usuário não cadastrado.");
@@ -124,6 +166,13 @@ public class Facade {
         salvarDados();
     }
 
+    /**
+     * Verifica se dois usuários são amigos.
+     *
+     * @param login O login do usuário.
+     * @param amigoLogin O login do amigo.
+     * @return true se forem amigos, false caso contrário.
+     */
     public boolean ehAmigo(String login, String amigoLogin) {
         if (!usuarios.containsKey(login) || !usuarios.containsKey(amigoLogin)) {
             return false;
@@ -133,6 +182,13 @@ public class Facade {
         return usuario.ehAmigo(amigoLogin);
     }
 
+    /**
+     * Obtém a lista de amigos de um usuário.
+     *
+     * @param login O login do usuário.
+     * @return A lista de amigos no formato de string.
+     * @throws RuntimeException Se o usuário não estiver cadastrado.
+     */
     public String getAmigos(String login) {
         if (!usuarios.containsKey(login)) {
             throw new RuntimeException("Usuário não cadastrado.");
@@ -148,6 +204,14 @@ public class Facade {
         return "{" + String.join(",", amigos) + "}";
     }
 
+    /**
+     * Envia um recado para um usuário.
+     *
+     * @param id O ID da sessão do remetente.
+     * @param destinatario O login do destinatário.
+     * @param mensagem A mensagem do recado.
+     * @throws RuntimeException Se o remetente ou o destinatário não estiverem cadastrados, ou se o remetente tentar enviar um recado para si mesmo.
+     */
     public void enviarRecado(String id, String destinatario, String mensagem) {
         // Verificamos se o ID da sessão é válido
         if (!sessoes.containsKey(id)) {
@@ -175,6 +239,13 @@ public class Facade {
         salvarDados();
     }
 
+    /**
+     * Lê o próximo recado de um usuário.
+     *
+     * @param id O ID da sessão do usuário.
+     * @return A mensagem do recado.
+     * @throws RuntimeException Se o usuário não estiver cadastrado ou se não houver recados.
+     */
     public String lerRecado(String id) {
         // Verificamos se o ID da sessão é válido
         if (!sessoes.containsKey(id)) {
