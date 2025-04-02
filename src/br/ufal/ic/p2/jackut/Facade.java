@@ -1,6 +1,5 @@
 package br.ufal.ic.p2.jackut;
 
-import easyaccept.EasyAccept;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -69,26 +68,38 @@ public class Facade {
         }
 
         Usuario usuario = usuarios.get(login);
-        if (atributo.equalsIgnoreCase("nome")) {
-            return usuario.getNome();
-        }
-        throw new RuntimeException("Atributo não encontrado.");
+        return usuario.getAtributo(atributo);
     }
 
     public void editarPerfil(String id, String atributo, String valor) {
         if (!sessoes.containsKey(id)) {
-            throw new RuntimeException("Sessão inválida.");
+            throw new RuntimeException("Usuário não cadastrado.");
         }
 
         String login = sessoes.get(id);
         Usuario usuario = usuarios.get(login);
-
-        if (atributo.equalsIgnoreCase("nome")) {
-            usuario.setNome(valor);
-        } else {
-            throw new RuntimeException("Atributo não encontrado.");
-        }
+        usuario.setAtributo(atributo, valor);
         salvarDados();
+    }
+
+    public void adicionarAmigo(String id, String amigo) {
+        throw new RuntimeException("Funcionalidade não implementada.");
+    }
+
+    public boolean ehAmigo(String login, String amigo) {
+        throw new RuntimeException("Funcionalidade não implementada.");
+    }
+
+    public String getAmigos(String login) {
+        throw new RuntimeException("Funcionalidade não implementada.");
+    }
+
+    public void enviarRecado(String id, String destinatario, String mensagem) {
+        throw new RuntimeException("Funcionalidade não implementada.");
+    }
+
+    public String lerRecado(String id) {
+        throw new RuntimeException("Funcionalidade não implementada.");
     }
 
     public void encerrarSistema() {
