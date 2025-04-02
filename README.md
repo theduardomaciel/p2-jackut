@@ -7,6 +7,7 @@
 </picture>
 
 <br />
+<br />
 
 > [!NOTE]
 > As entregas das milestones estão disponíveis no [diretório `docs`](https://github.com/theduardomaciel/p2-jackut/tree/master/docs) do repositório.
