@@ -6,6 +6,11 @@ import java.util.Map;
 public class Database {
     private static final String DATA_FILE = "usuarios.dat";
 
+    /**
+     * Salva os dados dos usuários no arquivo especificado.
+     *
+     * @param usuarios O mapa contendo os dados dos usuários a serem salvos.
+     */
     public void salvarDados(Map<String, Usuario> usuarios) {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(DATA_FILE))) {
             oos.writeObject(usuarios);
@@ -14,6 +19,11 @@ public class Database {
         }
     }
 
+    /**
+     * Carrega os dados dos usuários do arquivo especificado.
+     *
+     * @return Um mapa contendo os dados dos usuários carregados, ou null se o arquivo não existir.
+     */
     @SuppressWarnings("unchecked")
     public Map<String, Usuario> carregarDados() {
         File file = new File(DATA_FILE);
