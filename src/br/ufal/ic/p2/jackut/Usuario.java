@@ -40,14 +40,6 @@ public class Usuario implements Serializable {
         return senha;
     }
 
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
     public String getAtributo(String atributo) {
         if (atributo.equalsIgnoreCase("nome")) {
             return nome;
@@ -72,26 +64,24 @@ public class Usuario implements Serializable {
         return Collections.unmodifiableList(amigos);
     }
 
-    public boolean enviarConviteAmizade(String loginAmigo) {
+    public void enviarConviteAmizade(String loginAmigo) {
         if (amigos.contains(loginAmigo)) {
-            return false;
+            return;
         }
 
         if (convitesEnviados.contains(loginAmigo)) {
-            return false;
+            return;
         }
 
         convitesEnviados.add(loginAmigo);
-        return true;
     }
 
-    public boolean aceitarAmizade(String loginAmigo) {
+    public void aceitarAmizade(String loginAmigo) {
         if (amigos.contains(loginAmigo)) {
-            return false;
+            return;
         }
 
         amigos.add(loginAmigo);
-        return true;
     }
 
     public boolean verificarConvitePendente(String loginAmigo) {
