@@ -1,21 +1,5 @@
 # Projeto: Rede de Relacionamentos Jackut
 
-## Instruções
-
-Este documento descreve o projeto a ser desenvolvido na disciplina, baseado no material do Prof. Jacque Sauvé, da Universidade Federal de Campina Grande.  
-Neste semestre, desenvolveremos uma rede de relacionamentos chamada **Jackut**. A análise do sistema já foi realizada e será fornecida a vocês por meio deste documento e, principalmente, pelos artefatos de análise executáveis representados pelos testes de aceitação automáticos.  
-
-O principal objetivo do projeto é garantir que o sistema desenvolvido passe 100% dos testes de aceitação.  
-Isso significa que ele atenderá plenamente aos requisitos do cliente, o aspecto mais importante no desenvolvimento de software de qualidade.  
-Os testes de aceitação avaliarão exclusivamente a lógica de negócio, sem considerar a interface com o usuário.  
-Embora interfaces bem projetadas sejam essenciais em sistemas reais, neste projeto focaremos apenas na implementação da lógica de negócio.  
-Essa abordagem reforça a importância de separar a interface da lógica do sistema, um princípio arquitetural fundamental.  
-
-O desenvolvimento do sistema será incremental, seguindo marcos (milestones). Em cada um deles, novas funcionalidades serão adicionadas ao sistema. Essas funcionalidades estão descritas em **User Stories**, que possuem duas partes:
-1. Uma descrição informal da funcionalidade desejada e das interações esperadas.
-2. Um conjunto formal de testes de aceitação que comprovam a correta implementação da funcionalidade.  
-Antes de entregar cada milestone, é essencial revisar atentamente as recomendações e a lista de requisitos de entrega.
-
 ## Descrição
 O Jackut é um sistema que mantém uma rede de relacionamentos, nos moldes de uma série de outras que há na internet hoje em dia (Orkut, Friendster, etc.). Ele é particularmente inspirado no Orkut (www.orkut.com).  
 A funcionalidade desejada do Jackut está descrita em User Stories (Use Cases informais). Cada Story descreve uma interação que o sistema deve suportar.  
@@ -26,12 +10,21 @@ Em geral, o Jackut deve ser capaz de:
 * Manter uma série de informações de relacionamentos entre os usuários (agrupamentos em comunidades, redes de amizade, de fãs, listas de paqueras, etc.)  
 * Manter o fluxo de mensagens entre os usuários do sistema.
 
+## Instruções
+
+O desenvolvimento do sistema será incremental, seguindo marcos (milestones). Em cada um deles, novas funcionalidades serão adicionadas ao sistema.  
+Os testes de aceitação avaliarão exclusivamente a lógica de negócio, sem considerar a interface com o usuário.
+Essas funcionalidades estão descritas em **User Stories**, que possuem duas partes:
+1. Uma descrição informal da funcionalidade desejada e das interações esperadas.
+2. Um conjunto formal de testes de aceitação que comprovam a correta implementação da funcionalidade.  
+   Antes de entregar cada milestone, é essencial revisar atentamente as recomendações e a lista de requisitos de entrega.
+
 ## As Users Stories
 
-As User Stories (plural de User Story) levantadas inicialmente para o sistema estão mostradas abaixo.  
-User Stories são uma forma de expressar requisitos funcionais desejados para o sistema (o que o sistema deve fazer).  
-Observe que, no mundo real, o cliente poderá mudar de idéia com respeito a esses requisitos funcionais ao longo do tempo.  
-As User Stories foram priorizadas pelo cliente conforme podem ver na descrição dos milestones.  
+As User Stories¹ levantadas inicialmente para o sistema estão mostradas abaixo, priorizadas pelo cliente conforme a descrição dos milestones.  
+
+> ¹**User Stories:** _são uma forma de expressar requisitos funcionais desejados para o sistema (o que o sistema deve fazer)._
+
 
 | US | Título                           | Breve Descrição                                                                                                                                                                                                                                               |
 |:--:|----------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
