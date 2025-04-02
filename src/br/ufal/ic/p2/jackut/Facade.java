@@ -3,6 +3,7 @@ package br.ufal.ic.p2.jackut;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
 
 public class Facade {
     private static final String DATA_FILE = "usuarios.dat";
@@ -82,16 +83,69 @@ public class Facade {
         salvarDados();
     }
 
-    public void adicionarAmigo(String id, String amigo) {
-        throw new RuntimeException("Funcionalidade não implementada.");
+    public void adicionarAmigo(String id, String amigoLogin) {
+        if (!sessoes.containsKey(id)) {
+            throw new RuntimeException("Usuário não cadastrado.");
+        }
+
+        String login = sessoes.get(id);
+
+        if (login.equals(amigoLogin)) {
+            throw new RuntimeException("Usuário não pode adicionar a si mesmo como amigo.");
+        }
+
+        if (!usuarios.containsKey(amigoLogin)) {
+            throw new RuntimeException("Usuário não cadastrado.");
+        }
+
+        Usuario usuario = usuarios.get(login);
+        Usuario amigo = usuarios.get(amigoLogin);
+
+        if (usuario.ehAmigo(amigoLogin)) {
+            throw new RuntimeException("Usuário já está adicionado como amigo.");
+        }
+
+        // Verificamos se o outro usuário já enviou convite
+        if (amigo.verificarConvitePendente(login)) {
+            // Caso sim, aceitamos a amizade em ambas as direções
+            usuario.aceitarAmizade(amigoLogin);
+            amigo.aceitarAmizade(login);
+            salvarDados();
+            return;
+        }
+
+        // Verificamos se já enviou convite antes
+        if (usuario.verificarConvitePendente(amigoLogin)) {
+            throw new RuntimeException("Usuário já está adicionado como amigo, esperando aceitação do convite.");
+        }
+
+        // Enviamos o convite
+        usuario.enviarConviteAmizade(amigoLogin);
+        salvarDados();
     }
 
-    public boolean ehAmigo(String login, String amigo) {
-        throw new RuntimeException("Funcionalidade não implementada.");
+    public boolean ehAmigo(String login, String amigoLogin) {
+        if (!usuarios.containsKey(login) || !usuarios.containsKey(amigoLogin)) {
+            return false;
+        }
+
+        Usuario usuario = usuarios.get(login);
+        return usuario.ehAmigo(amigoLogin);
     }
 
     public String getAmigos(String login) {
-        throw new RuntimeException("Funcionalidade não implementada.");
+        if (!usuarios.containsKey(login)) {
+            throw new RuntimeException("Usuário não cadastrado.");
+        }
+
+        Usuario usuario = usuarios.get(login);
+        List<String> amigos = usuario.getAmigos();
+
+        if (amigos.isEmpty()) {
+            return "{}";
+        }
+
+        return "{" + String.join(",", amigos) + "}";
     }
 
     public void enviarRecado(String id, String destinatario, String mensagem) {

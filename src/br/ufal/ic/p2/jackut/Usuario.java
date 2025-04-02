@@ -7,13 +7,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+import java.util.Collections;
 
 public class Usuario implements Serializable {
-    // serialVersionUID é uma versão única para identificar a classe
-    // durante a serialização e desserialização
-    // Isso é importante para garantir que a versão da classe que
-    // está sendo lida é compatível com a versão gravada (acredita em mim)
-    // Se a versão não for compatível, pode ocorrer uma InvalidClassException.
     private static final long serialVersionUID = 1L;
 
     private String login;
@@ -21,6 +17,7 @@ public class Usuario implements Serializable {
     private String nome;
     private Map<String, String> atributos;
     private List<String> amigos;
+    private List<String> convitesEnviados;
     private Queue<String> recados;
 
     public Usuario(String login, String senha, String nome) {
@@ -29,6 +26,7 @@ public class Usuario implements Serializable {
         this.nome = nome;
         this.atributos = new HashMap<>();
         this.amigos = new ArrayList<>();
+        this.convitesEnviados = new ArrayList<>();
         this.recados = new LinkedList<>();
     }
 
@@ -69,17 +67,37 @@ public class Usuario implements Serializable {
     }
 
     public List<String> getAmigos() {
-        return amigos;
+        return Collections.unmodifiableList(amigos);
     }
 
-    public void adicionarAmigo(String amigo) {
-        if (!amigos.contains(amigo)) {
-            amigos.add(amigo);
+    public boolean enviarConviteAmizade(String loginAmigo) {
+        if (amigos.contains(loginAmigo)) {
+            return false;
         }
+
+        if (convitesEnviados.contains(loginAmigo)) {
+            return false;
+        }
+
+        convitesEnviados.add(loginAmigo);
+        return true;
     }
 
-    public boolean ehAmigo(String amigo) {
-        return amigos.contains(amigo);
+    public boolean aceitarAmizade(String loginAmigo) {
+        if (amigos.contains(loginAmigo)) {
+            return false;
+        }
+
+        amigos.add(loginAmigo);
+        return true;
+    }
+
+    public boolean verificarConvitePendente(String loginAmigo) {
+        return convitesEnviados.contains(loginAmigo);
+    }
+
+    public boolean ehAmigo(String loginAmigo) {
+        return amigos.contains(loginAmigo);
     }
 
     public void adicionarRecado(String recado) {
