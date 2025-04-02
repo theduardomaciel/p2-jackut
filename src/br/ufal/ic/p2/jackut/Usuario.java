@@ -1,5 +1,6 @@
 package br.ufal.ic.p2.jackut;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,6 +11,7 @@ import java.util.Queue;
 import java.util.Collections;
 
 public class Usuario implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private String login;
