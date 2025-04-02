@@ -1,6 +1,6 @@
 # Projeto: Rede de Relacionamentos Jackut
 
-> [!INFO]
+> [!NOTE]
 > As entregas das milestones estão disponíveis no [diretório `docs`](https://github.com/theduardomaciel/p2-jackut/tree/master/docs) do repositório.
 
 ## Descrição
