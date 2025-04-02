@@ -1,22 +1,27 @@
 # Projeto: Rede de Relacionamentos Jackut
 
-## Instruções do Projeto
+## Instruções
 
 Este documento descreve o projeto a ser desenvolvido na disciplina, baseado no material do Prof. Jacque Sauvé, da Universidade Federal de Campina Grande.  
 Neste semestre, desenvolveremos uma rede de relacionamentos chamada **Jackut**. A análise do sistema já foi realizada e será fornecida a vocês por meio deste documento e, principalmente, pelos artefatos de análise executáveis representados pelos testes de aceitação automáticos.  
-O principal objetivo do projeto é garantir que o sistema desenvolvido passe 100% dos testes de aceitação. Isso significa que ele atenderá plenamente aos requisitos do cliente, que é o aspecto mais importante no desenvolvimento de software de qualidade.  
-Os testes de aceitação avaliarão exclusivamente a lógica de negócio, sem considerar a interface com o usuário. Embora interfaces bem projetadas sejam essenciais em sistemas reais, neste projeto focaremos apenas na implementação da lógica de negócio. Essa abordagem reforça a importância de separar a interface da lógica do sistema, um princípio arquitetural fundamental.  
+
+O principal objetivo do projeto é garantir que o sistema desenvolvido passe 100% dos testes de aceitação.  
+Isso significa que ele atenderá plenamente aos requisitos do cliente, o aspecto mais importante no desenvolvimento de software de qualidade.  
+Os testes de aceitação avaliarão exclusivamente a lógica de negócio, sem considerar a interface com o usuário.  
+Embora interfaces bem projetadas sejam essenciais em sistemas reais, neste projeto focaremos apenas na implementação da lógica de negócio.  
+Essa abordagem reforça a importância de separar a interface da lógica do sistema, um princípio arquitetural fundamental.  
+
 O desenvolvimento do sistema será incremental, seguindo marcos (milestones). Em cada um deles, novas funcionalidades serão adicionadas ao sistema. Essas funcionalidades estão descritas em **User Stories**, que possuem duas partes:
 1. Uma descrição informal da funcionalidade desejada e das interações esperadas.
 2. Um conjunto formal de testes de aceitação que comprovam a correta implementação da funcionalidade.  
 Antes de entregar cada milestone, é essencial revisar atentamente as recomendações e a lista de requisitos de entrega.
 
-## Descrição do Projeto (em poucas palavras)
+## Descrição
 O Jackut é um sistema que mantém uma rede de relacionamentos, nos moldes de uma série de outras que há na internet hoje em dia (Orkut, Friendster, etc.). Ele é particularmente inspirado no Orkut (www.orkut.com).  
 A funcionalidade desejada do Jackut está descrita em User Stories (Use Cases informais). Cada Story descreve uma interação que o sistema deve suportar.  
-As User Stories receberam prioridades (pelo cliente interessado) e devem ser implementadas de acordo com tais prioridades.   
-Em geral, o Jackut deve ser capaz de:
+As User Stories receberam prioridades (pelo cliente interessado) e devem ser implementadas de acordo com tais prioridades.  
 
+Em geral, o Jackut deve ser capaz de:
 * Manter um cadastro de informações dos usuários (perfis, álbuns, etc.)  
 * Manter uma série de informações de relacionamentos entre os usuários (agrupamentos em comunidades, redes de amizade, de fãs, listas de paqueras, etc.)  
 * Manter o fluxo de mensagens entre os usuários do sistema.
@@ -26,7 +31,6 @@ Em geral, o Jackut deve ser capaz de:
 As User Stories (plural de User Story) levantadas inicialmente para o sistema estão mostradas abaixo.  
 User Stories são uma forma de expressar requisitos funcionais desejados para o sistema (o que o sistema deve fazer).  
 Observe que, no mundo real, o cliente poderá mudar de idéia com respeito a esses requisitos funcionais ao longo do tempo.  
-É até possível que o professor (danado que é) altere os requisitos no meio do semestre.  
 As User Stories foram priorizadas pelo cliente conforme podem ver na descrição dos milestones.  
 
 | US | Título                           | Breve Descrição                                                                                                                                                                                                                                               |
@@ -45,8 +49,8 @@ As User Stories foram priorizadas pelo cliente conforme podem ver na descrição
 ## Testes de Aceitação
 
 A validação das **User Stories** implementadas pelos alunos será feita por meio de um conjunto de **testes de aceitação** pré-definidos. Esses testes serão disponibilizados pelo professor à medida que os **milestones** avançarem.
-
-Os testes serão escritos em uma linguagem de script interpretada pela biblioteca **Easy Accept**, que será fornecida pelo professor. Para executar os testes, será necessário criar uma **Façade** que acessará a lógica de negócio do sistema conforme a linguagem de script específica utilizada nos testes.
+Os testes serão escritos em uma linguagem de script interpretada pela biblioteca **Easy Accept**, que será fornecida pelo professor.  
+Para executar os testes, será necessário criar uma **Façade** que acessará a lógica de negócio do sistema conforme a linguagem de script específica utilizada nos testes.
 
 ---
 
@@ -89,21 +93,15 @@ Para permitir a execução dos testes de aceitação, será necessário implemen
 
 ---
 
-## Milestones
-
-A seguir estão os marcos de desenvolvimento e suas respectivas entregas.
-
-### **Primeiro Milestone**
+## **Primeiro Milestone**
 
 Os alunos devem implementar as **User Stories 1 a 4**.
 
-#### **Recomendações para a entrega:**
-
-##### **Itens a serem entregues:**
+### **Itens a serem entregues:**
 - Código-fonte documentado.
 - Relatório descrevendo o design do sistema, incluindo um **diagrama de classes**.
 
-##### **Instruções de entrega:**
+### **Instruções de entrega:**
 - O código deve ser enviado para um repositório específico no **GitHub** do aluno.
 - O repositório será baixado e testado.
 - Utilize **apenas caminhos relativos** para arquivos, evitando caminhos absolutos específicos da sua máquina.
@@ -112,7 +110,7 @@ Os alunos devem implementar as **User Stories 1 a 4**.
 - O sistema será testado com **JDK 1.5.0 ou superior**.
 - **Não** serão feitas alterações em `build.xml` ou arquivos `.bat` para ajustes de classpath ou outras configurações.
 
-##### **Critérios de avaliação:**
+### **Critérios de avaliação:**
 A nota do projeto será composta pelos seguintes critérios:
 
 | Critério                             | Peso (%)                                        |
@@ -123,26 +121,26 @@ A nota do projeto será composta pelos seguintes critérios:
 | **Qualidade do design**              | 20%                                             |
 | **Qualidade do relatório**           | 10%                                             |
 
-##### **Método de correção:**
+### **Método de correção:**
 
 1. **Compilação**
-  - O programa deve compilar. Caso contrário, os alunos serão notificados imediatamente e o projeto será penalizado.
-
+   - O programa deve compilar. Caso contrário, os alunos serão notificados imediatamente e o projeto será penalizado.
+   
 2. **Testes de Aceitação**
-  - Os testes de aceitação serão executados.
-  - Para cada teste que falhar, será descontado **1 ponto** sobre **10**.
-  - No **milestone 1**, serão testadas as User Stories **1, 2 e 3**.
-  - A partir do **milestone 2**, os testes das User Stories anteriores serão reavaliados.
+   - Os testes de aceitação serão executados. 
+   - Para cada teste que falhar, será descontado **1 ponto** sobre **10**. 
+   - No **milestone 1**, serão testadas as User Stories **1, 2 e 3**. 
+   - A partir do **milestone 2**, os testes das User Stories anteriores serão reavaliados.
 
 3. **Relatório**
-  - O relatório será avaliado de **0 a 10** conforme a qualidade da explicação e do design apresentado.
+   - O relatório será avaliado de **0 a 10** conforme a qualidade da explicação e do design apresentado.
 
 4. **Documentação**
-  - A qualidade do **Javadoc** será avaliada.
-  - Devem estar documentados: **pacotes, classes, métodos, parâmetros, valores de retorno e exceções**.
-  - Uma análise geral será feita, atribuindo nota de **0 a 10**.
+   - A qualidade do **Javadoc** será avaliada.
+   - Devem estar documentados: **pacotes, classes, métodos, parâmetros, valores de retorno e exceções**.
+   - Uma análise geral será feita, atribuindo nota de **0 a 10**.
 
 5. **Design**
-  - Será avaliada a qualidade do design do sistema com base no código e/ou no relatório.
-  - Os critérios incluem: organização das entidades, responsabilidade dos métodos e atributos, coerência dos relacionamentos entre classes.
-  - A nota será de **0 a 10**
+   - Será avaliada a qualidade do design do sistema com base no código e/ou no relatório.
+   - Os critérios incluem: organização das entidades, responsabilidade dos métodos e atributos, coerência dos relacionamentos entre classes.
+   - A nota será de **0 a 10**
