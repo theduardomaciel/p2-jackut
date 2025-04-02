@@ -6,7 +6,8 @@ import java.util.Map;
 import java.util.List;
 
 public class Facade {
-    private static final String DATA_FILE = "usuarios.dat";
+    private static final Database db = new Database();
+
     private Map<String, Usuario> usuarios;
     private Map<String, String> sessoes;
     private int contadorSessao;
@@ -15,7 +16,12 @@ public class Facade {
         usuarios = new HashMap<>();
         sessoes = new HashMap<>();
         contadorSessao = 0;
-        carregarDados();
+
+        // Carrega os dados do banco de dados
+        Map<String, Usuario> dadosCarregados = db.carregarDados();
+        if (dadosCarregados != null) {
+            usuarios = dadosCarregados;
+        }
     }
 
     /**
@@ -25,7 +31,9 @@ public class Facade {
         usuarios.clear();
         sessoes.clear();
         contadorSessao = 0;
-        salvarDados();
+
+        // Salva os dados zerados no banco de dados
+        db.salvarDados(usuarios);
     }
 
     /**
@@ -46,7 +54,8 @@ public class Facade {
 
         Usuario novoUsuario = new Usuario(login, senha, nome);
         usuarios.put(login, novoUsuario);
-        salvarDados();
+
+        db.salvarDados(usuarios);
     }
 
     private void validarLogin(String login) {
@@ -115,7 +124,7 @@ public class Facade {
         String login = sessoes.get(id);
         Usuario usuario = usuarios.get(login);
         usuario.setAtributo(atributo, valor);
-        salvarDados();
+        db.salvarDados(usuarios);
     }
 
     /**
@@ -152,7 +161,7 @@ public class Facade {
             // Caso sim, aceitamos a amizade em ambas as direções
             usuario.aceitarAmizade(amigoLogin);
             amigo.aceitarAmizade(login);
-            salvarDados();
+            db.salvarDados(usuarios);
             return;
         }
 
@@ -163,7 +172,7 @@ public class Facade {
 
         // Enviamos o convite
         usuario.enviarConviteAmizade(amigoLogin);
-        salvarDados();
+        db.salvarDados(usuarios);
     }
 
     /**
@@ -236,7 +245,7 @@ public class Facade {
         usuarioDestinatario.adicionarRecado(mensagem);
 
         // E salvamos os dados atualizados
-        salvarDados();
+        db.salvarDados(usuarios);
     }
 
     /**
@@ -266,34 +275,12 @@ public class Facade {
         }
 
         // Salvamos os dados atualizados após a leitura do recado
-        salvarDados();
+        db.salvarDados(usuarios);
 
         return recado;
     }
 
     public void encerrarSistema() {
-        salvarDados();
-    }
-
-    private void salvarDados() {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(DATA_FILE))) {
-            oos.writeObject(usuarios);
-        } catch (IOException e) {
-            System.err.println("Erro ao salvar dados: " + e.getMessage());
-        }
-    }
-
-    @SuppressWarnings("unchecked")
-    private void carregarDados() {
-        File file = new File(DATA_FILE);
-        if (!file.exists()) {
-            return;
-        }
-
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(DATA_FILE))) {
-            usuarios = (Map<String, Usuario>) ois.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            System.err.println("Erro ao carregar dados: " + e.getMessage());
-        }
+        db.salvarDados(usuarios);
     }
 }
