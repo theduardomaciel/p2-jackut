@@ -6,6 +6,8 @@
   <img alt="Projeto: Rede de Relacionamentos Jackut" src="/.github/cover_light.png">
 </picture>
 
+<br />
+
 > [!NOTE]
 > As entregas das milestones estão disponíveis no [diretório `docs`](https://github.com/theduardomaciel/p2-jackut/tree/master/docs) do repositório.
 
