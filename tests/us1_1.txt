@@ -10,7 +10,7 @@ expectError "Usuário não cadastrado." getAtributoUsuario login=jpsauve atributo=
 criarUsuario login=jpsauve senha=sauvejp nome="Jacques Sauve"
 expect "Jacques Sauve" getAtributoUsuario login=jpsauve atributo=nome
 
-# O comando "abrirSessao" retorna um id que pode ser atribuíd a uma variável do EasyAccept para referência posterior no script, como você poderá ver, por exemplo, no user story 2.
+# O comando "abrirSessao" retorna um id que pode ser atribuído a uma variável do EasyAccept para referência posterior no script, como você poderá ver, por exemplo, no user story 2.
 # A gente criou esse comando por questão de segurança, para simular um usuário entrando a senha e iniciando um modo privado de uso do sistema.
 # Nesse caso da us1_1, ele está sendo usado meramente para testar a senha (porque não podemos usar "expect getAtributoUsuario atributo=senha", justamente pelas questões de segurança).
 # Se a senha estiver correta, a sessão é aberta e o teste passa sem erros.
@@ -49,4 +49,3 @@ expectError "Login ou senha inválidos." abrirSessao login= senha=x
 expectError "Login ou senha inválidos." abrirSessao login=jpsauve senha=
 
 encerrarSistema
-quit
