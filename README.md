@@ -10,7 +10,7 @@
 <br />
 
 > [!NOTE]
-> As entregas das milestones estão disponíveis no [diretório `docs`](https://github.com/theduardomaciel/p2-jackut/tree/master/docs) do repositório.
+> As entregas das milestones estão disponíveis no [diretório `docs`](./docs) do repositório.
 
 ## Descrição
 O Jackut é um sistema que mantém uma rede de relacionamentos, nos moldes de uma série de outras que há na internet hoje em dia (Orkut, Friendster, etc.). Ele é particularmente inspirado no Orkut (www.orkut.com).  
