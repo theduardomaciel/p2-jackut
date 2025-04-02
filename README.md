@@ -1,5 +1,11 @@
 # Projeto: Rede de Relacionamentos Jackut
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./.github/cover.png">
+  <source media="(prefers-color-scheme: light)" srcset="./.github/cover_light.png">
+  <img alt="Projeto: Rede de Relacionamentos Jackut" src="/.github/cover_light.png">
+</picture>
+
 > [!NOTE]
 > As entregas das milestones estão disponíveis no [diretório `docs`](https://github.com/theduardomaciel/p2-jackut/tree/master/docs) do repositório.
 
