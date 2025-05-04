@@ -1,293 +1,66 @@
 package br.ufal.ic.p2.jackut;
 
-import br.ufal.ic.p2.jackut.exceptions.*;
-
-import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.List;
+import br.ufal.ic.p2.jackut.services.*;
 
 public class Facade {
-    private static final Database db = new Database();
-
-    private Map<String, Usuario> usuarios;
-    private Map<String, String> sessoes;
-    private int contadorSessao;
+    private final UsuarioService usuarioService;
+    private final SessaoService sessaoService;
+    private final AmizadeService amizadeService;
+    private final RecadoService recadoService;
 
     public Facade() {
-        usuarios = new HashMap<>();
-        sessoes = new HashMap<>();
-        contadorSessao = 0;
-
-        // Carrega os dados do banco de dados
-        Map<String, Usuario> dadosCarregados = db.carregarDados();
-        if (dadosCarregados != null) {
-            usuarios = dadosCarregados;
-        }
+        this.usuarioService = UsuarioService.getInstance();
+        this.sessaoService = SessaoService.getInstance();
+        this.amizadeService = AmizadeService.getInstance();
+        this.recadoService = RecadoService.getInstance();
     }
 
-    /**
-     * Reseta o sistema, limpando todos os dados de usuários e sessões.
-     */
     public void zerarSistema() {
-        usuarios.clear();
-        sessoes.clear();
-        contadorSessao = 0;
-
-        // Salva os dados zerados no banco de dados
-        db.salvarDados(usuarios);
+        usuarioService.zerarSistema();
+        sessaoService.zerarSessoes();
     }
 
-    /**
-     * Cria um novo usuário no sistema.
-     *
-     * @param login O login do novo usuário.
-     * @param senha A senha do novo usuário.
-     * @param nome O nome do novo usuário.
-     * @throws AcaoProibidaException Se o login já estiver em uso.
-     */
     public void criarUsuario(String login, String senha, String nome) {
-        validarLogin(login);
-        validarSenha(senha);
-
-        if (usuarios.containsKey(login)) {
-            throw new AcaoProibidaException("Conta com esse nome já existe.");
-        }
-
-        Usuario novoUsuario = new Usuario(login, senha, nome);
-        usuarios.put(login, novoUsuario);
-
-        db.salvarDados(usuarios);
+        usuarioService.criarUsuario(login, senha, nome);
     }
 
-    private void validarLogin(String login) {
-        if (login == null || login.trim().isEmpty()) {
-            throw new LoginInvalidoException();
-        }
-    }
-
-    private void validarSenha(String senha) {
-        if (senha == null || senha.trim().isEmpty()) {
-            throw new SenhaInvalidaException();
-        }
-    }
-
-    /**
-     * Abre uma sessão para um usuário existente.
-     *
-     * @param login O login do usuário.
-     * @param senha A senha do usuário.
-     * @return O ID da sessão criada.
-     * @throws LoginInvalidoException Se o login ou a senha forem inválidos.
-     */
     public String abrirSessao(String login, String senha) {
-        if (login == null || login.trim().isEmpty() ||
-                senha == null || senha.trim().isEmpty() ||
-                !usuarios.containsKey(login) ||
-                !usuarios.get(login).getSenha().equals(senha)) {
-            throw new LoginInvalidoException();
-        }
-
-        String idSessao = "sessao" + (++contadorSessao);
-        sessoes.put(idSessao, login);
-        return idSessao;
+        return sessaoService.abrirSessao(login, senha);
     }
 
-    /**
-     * Obtém um atributo de um usuário.
-     *
-     * @param login O login do usuário.
-     * @param atributo O nome do atributo.
-     * @return O valor do atributo.
-     * @throws UsuarioNaoCadastradoException Se o usuário não estiver cadastrado.
-     */
     public String getAtributoUsuario(String login, String atributo) {
-        if (!usuarios.containsKey(login)) {
-            throw new UsuarioNaoCadastradoException();
-        }
-
-        Usuario usuario = usuarios.get(login);
-        return usuario.getAtributo(atributo);
+        return usuarioService.getAtributoUsuario(login, atributo);
     }
 
-    /**
-     * Edita o perfil de um usuário.
-     *
-     * @param id O ID da sessão do usuário.
-     * @param atributo O nome do atributo a ser editado.
-     * @param valor O novo valor do atributo.
-     * @throws UsuarioNaoCadastradoException Se o usuário não estiver cadastrado.
-     */
     public void editarPerfil(String id, String atributo, String valor) {
-        if (!sessoes.containsKey(id)) {
-            throw new UsuarioNaoCadastradoException();
-        }
-
-        String login = sessoes.get(id);
-        Usuario usuario = usuarios.get(login);
-        usuario.setAtributo(atributo, valor);
-        db.salvarDados(usuarios);
+        String login = sessaoService.getLoginUsuario(id);
+        usuarioService.editarPerfil(login, atributo, valor);
     }
 
-    /**
-     * Adiciona um amigo para um usuário.
-     *
-     * @param id O ID da sessão do usuário.
-     * @param amigoLogin O login do amigo a ser adicionado.
-     * @throws UsuarioNaoCadastradoException Se o usuário ou o amigo não estiverem cadastrados.
-     * @throws AcaoProibidaException Se o usuário ou o amigo não estiverem cadastrados, ou se já forem amigos.
-     */
     public void adicionarAmigo(String id, String amigoLogin) {
-        // Verificamos se o ID da sessão é válido
-        if (!sessoes.containsKey(id)) {
-            throw new UsuarioNaoCadastradoException();
-        }
-
-        String login = sessoes.get(id);
-
-        if (login.equals(amigoLogin)) {
-            throw new AcaoProibidaException("Usuário não pode adicionar a si mesmo como amigo.");
-        }
-
-        // Verificamos se o amigo existe
-        if (!usuarios.containsKey(amigoLogin)) {
-            throw new UsuarioNaoCadastradoException();
-        }
-
-        Usuario usuario = usuarios.get(login);
-        Usuario amigo = usuarios.get(amigoLogin);
-
-        if (usuario.ehAmigo(amigoLogin)) {
-            throw new AcaoProibidaException("Usuário já está adicionado como amigo.");
-        }
-
-        // Verificamos se o outro usuário já enviou convite
-        if (amigo.verificarConvitePendente(login)) {
-            // Caso sim, aceitamos a amizade em ambas as direções
-            usuario.aceitarAmizade(amigoLogin);
-            amigo.aceitarAmizade(login);
-            db.salvarDados(usuarios);
-            return;
-        }
-
-        // Verificamos se já enviou convite antes
-        if (usuario.verificarConvitePendente(amigoLogin)) {
-            throw new AcaoProibidaException("Usuário já está adicionado como amigo, esperando aceitação do convite.");
-        }
-
-        // Enviamos o convite
-        usuario.enviarConviteAmizade(amigoLogin);
-        db.salvarDados(usuarios);
+        String login = sessaoService.getLoginUsuario(id);
+        amizadeService.adicionarAmigo(login, amigoLogin);
     }
 
-    /**
-     * Verifica se dois usuários são amigos.
-     *
-     * @param login O login do usuário.
-     * @param amigoLogin O login do amigo.
-     * @return true se forem amigos, false caso contrário.
-     */
     public boolean ehAmigo(String login, String amigoLogin) {
-        if (!usuarios.containsKey(login) || !usuarios.containsKey(amigoLogin)) {
-            return false;
-        }
-
-        Usuario usuario = usuarios.get(login);
-        return usuario.ehAmigo(amigoLogin);
+        return amizadeService.ehAmigo(login, amigoLogin);
     }
 
-    /**
-     * Obtém a lista de amigos de um usuário.
-     *
-     * @param login O login do usuário.
-     * @return A lista de amigos no formato de string.
-     * @throws UsuarioNaoCadastradoException Se o usuário não estiver cadastrado.
-     */
     public String getAmigos(String login) {
-        if (!usuarios.containsKey(login)) {
-            throw new UsuarioNaoCadastradoException();
-        }
-
-        Usuario usuario = usuarios.get(login);
-        List<String> amigos = usuario.getAmigos();
-
-        if (amigos.isEmpty()) {
-            return "{}";
-        }
-
-        return "{" + String.join(",", amigos) + "}";
+        return amizadeService.getAmigos(login);
     }
 
-    /**
-     * Envia um recado para um usuário.
-     *
-     * @param id O ID da sessão do remetente.
-     * @param destinatario O login do destinatário.
-     * @param mensagem A mensagem do recado.
-     * @throws UsuarioNaoCadastradoException Se o destinatário não estiver cadastrado.
-     * @throws AcaoProibidaException Se o usuário tentar enviar um recado para si mesmo.
-     */
     public void enviarRecado(String id, String destinatario, String mensagem) {
-        // Verificamos se o ID da sessão é válido
-        if (!sessoes.containsKey(id)) {
-            throw new UsuarioNaoCadastradoException();
-        }
-
-        // Obtemos o login do remetente
-        String loginRemetente = sessoes.get(id);
-
-        // Verificamos se o destinatário existe
-        if (!usuarios.containsKey(destinatario)) {
-            throw new UsuarioNaoCadastradoException();
-        }
-
-        // Verificamos se o usuário está tentando enviar um recado para si mesmo
-        if (loginRemetente.equals(destinatario)) {
-            throw new AcaoProibidaException("Usuário não pode enviar recado para si mesmo.");
-        }
-
-        // Em seguida, enviamos o recado ao destinatário
-        Usuario usuarioDestinatario = usuarios.get(destinatario);
-        usuarioDestinatario.adicionarRecado(mensagem);
-
-        // E salvamos os dados atualizados
-        db.salvarDados(usuarios);
+        String remetente = sessaoService.getLoginUsuario(id);
+        recadoService.enviarRecado(remetente, destinatario, mensagem);
     }
 
-    /**
-     * Lê o próximo recado de um usuário.
-     *
-     * @param id O ID da sessão do usuário.
-     * @return A mensagem do recado.
-     * @throws UsuarioNaoCadastradoException Se o usuário não estiver cadastrado
-     * @throws RecursoNaoEncontradoException Se não houver recados.
-     */
     public String lerRecado(String id) {
-        // Verificamos se o ID da sessão é válido
-        if (!sessoes.containsKey(id)) {
-            // Caso não, o usuário não está cadastrado
-            throw new UsuarioNaoCadastradoException();
-        }
-
-        // Obtemos o login do usuário
-        String login = sessoes.get(id);
-        Usuario usuario = usuarios.get(login);
-
-        // Lemos o próximo recado da fila
-        String recado = usuario.lerRecado();
-
-        // Se não houver recados, lançamos uma exceção
-        if (recado == null) {
-            throw new RecursoNaoEncontradoException("Não há recados.");
-        }
-
-        // Salvamos os dados atualizados após a leitura do recado
-        db.salvarDados(usuarios);
-
-        return recado;
+        String login = sessaoService.getLoginUsuario(id);
+        return recadoService.lerRecado(login);
     }
 
     public void encerrarSistema() {
-        db.salvarDados(usuarios);
+        usuarioService.salvarDados();
     }
 }
