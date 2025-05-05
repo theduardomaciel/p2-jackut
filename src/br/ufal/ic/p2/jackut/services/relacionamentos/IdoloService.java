@@ -1,13 +1,11 @@
-package br.ufal.ic.p2.jackut.services.relationshps;
+package br.ufal.ic.p2.jackut.services.relacionamentos;
 
 import br.ufal.ic.p2.jackut.models.Usuario;
 import br.ufal.ic.p2.jackut.exceptions.idolo.IdoloExistenteException;
 import br.ufal.ic.p2.jackut.exceptions.idolo.AutoIdolatriaException;
 import br.ufal.ic.p2.jackut.exceptions.inimizade.InteracaoComInimigoException;
-import br.ufal.ic.p2.jackut.services.SessaoService;
-import br.ufal.ic.p2.jackut.services.UsuarioService;
 
-public class IdoloService extends RelationshipBaseService {
+public class IdoloService extends RelacionamentoBaseService {
     private static IdoloService instance;
 
     // Construtor privado para implementar o Singleton

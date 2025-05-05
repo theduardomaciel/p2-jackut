@@ -71,7 +71,7 @@ public class ComunidadeService {
 
     public void enviarMensagem(String nome, String loginRemetente, String mensagem) {
         Comunidade comunidade = getComunidade(nome);
-        comunidade.adicionarMensagem(mensagem, loginRemetente);
+        comunidade.adicionarMensagem(loginRemetente, mensagem);
     }
 
     public String lerMensagem(String login) {

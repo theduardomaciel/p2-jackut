@@ -1,12 +1,10 @@
-package br.ufal.ic.p2.jackut.services.relationshps;
+package br.ufal.ic.p2.jackut.services.relacionamentos;
 
 import br.ufal.ic.p2.jackut.models.Usuario;
 import br.ufal.ic.p2.jackut.exceptions.inimizade.InimigoExistenteException;
 import br.ufal.ic.p2.jackut.exceptions.inimizade.AutoInimizadeException;
-import br.ufal.ic.p2.jackut.services.SessaoService;
-import br.ufal.ic.p2.jackut.services.UsuarioService;
 
-public class InimizadeService extends RelationshipBaseService {
+public class InimizadeService extends RelacionamentoBaseService {
     private static InimizadeService instance;
 
     private InimizadeService() {

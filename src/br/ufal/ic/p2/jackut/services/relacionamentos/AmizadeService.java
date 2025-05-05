@@ -1,4 +1,4 @@
-package br.ufal.ic.p2.jackut.services.relationshps;
+package br.ufal.ic.p2.jackut.services.relacionamentos;
 
 import br.ufal.ic.p2.jackut.exceptions.amizade.AmizadeJaExistenteException;
 import br.ufal.ic.p2.jackut.exceptions.amizade.AmizadeParaSiMesmoException;
@@ -6,9 +6,8 @@ import br.ufal.ic.p2.jackut.exceptions.amizade.ConviteJaEnviadoException;
 import br.ufal.ic.p2.jackut.exceptions.inimizade.InteracaoComInimigoException;
 import br.ufal.ic.p2.jackut.exceptions.usuario.UsuarioNaoCadastradoException;
 import br.ufal.ic.p2.jackut.models.Usuario;
-import br.ufal.ic.p2.jackut.services.UsuarioService;
 
-public class AmizadeService extends RelationshipBaseService {
+public class AmizadeService extends RelacionamentoBaseService {
     private static AmizadeService instance;
 
     // Construtor privado para implementar o Singleton

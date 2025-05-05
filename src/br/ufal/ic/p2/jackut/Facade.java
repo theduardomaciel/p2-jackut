@@ -1,10 +1,11 @@
 package br.ufal.ic.p2.jackut;
 
 import br.ufal.ic.p2.jackut.services.*;
-import br.ufal.ic.p2.jackut.services.relationshps.AmizadeService;
-import br.ufal.ic.p2.jackut.services.relationshps.IdoloService;
-import br.ufal.ic.p2.jackut.services.relationshps.InimizadeService;
-import br.ufal.ic.p2.jackut.services.relationshps.PaqueraService;
+import br.ufal.ic.p2.jackut.services.mensagem.RecadoService;
+import br.ufal.ic.p2.jackut.services.relacionamentos.AmizadeService;
+import br.ufal.ic.p2.jackut.services.relacionamentos.IdoloService;
+import br.ufal.ic.p2.jackut.services.relacionamentos.InimizadeService;
+import br.ufal.ic.p2.jackut.services.relacionamentos.PaqueraService;
 
 public class Facade {
     private final UsuarioService usuarioService;
@@ -65,12 +66,12 @@ public class Facade {
 
     public void enviarRecado(String id, String destinatario, String mensagem) {
         String remetente = sessaoService.getLoginUsuario(id);
-        recadoService.enviarRecado(remetente, destinatario, mensagem);
+        recadoService.enviarMensagem(remetente, destinatario, mensagem);
     }
 
     public String lerRecado(String id) {
         String login = sessaoService.getLoginUsuario(id);
-        return recadoService.lerRecado(login);
+        return recadoService.lerMensagem(login);
     }
 
     public void criarComunidade(String sessaoId, String nome, String descricao) {

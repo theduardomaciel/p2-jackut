@@ -1,6 +1,8 @@
-package br.ufal.ic.p2.jackut.services;
+package br.ufal.ic.p2.jackut.services.mensagem;
 
-public class MensagemService {
+import br.ufal.ic.p2.jackut.services.ComunidadeService;
+
+public class MensagemService extends MensagemBaseService {
     private static MensagemService instance;
     private final ComunidadeService comunidadeService;
 

@@ -1,14 +1,14 @@
-package br.ufal.ic.p2.jackut.services.relationshps;
+package br.ufal.ic.p2.jackut.services.relacionamentos;
 
 import br.ufal.ic.p2.jackut.models.Usuario;
 import br.ufal.ic.p2.jackut.services.SessaoService;
 import br.ufal.ic.p2.jackut.services.UsuarioService;
 
-public abstract class RelationshipBaseService {
+public abstract class RelacionamentoBaseService {
     protected final UsuarioService usuarioService;
     protected final SessaoService sessaoService;
 
-    protected RelationshipBaseService() {
+    protected RelacionamentoBaseService() {
         this.usuarioService = UsuarioService.getInstance();
         this.sessaoService = SessaoService.getInstance();
     }

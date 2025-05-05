@@ -60,8 +60,8 @@ public class Comunidade implements Serializable {
         return membros.contains(usuario);
     }
 
-    public void adicionarMensagem(String conteudo, String remetente) {
-        Mensagem mensagem = new Mensagem(conteudo, remetente);
+    public void adicionarMensagem(String remetente, String conteudo) {
+        Mensagem mensagem = new Mensagem(remetente, conteudo);
         for (Usuario membro : membros) {
             mensagensPorUsuario.get(membro.getLogin()).add(mensagem);
         }

@@ -1,14 +1,12 @@
-package br.ufal.ic.p2.jackut.services.relationshps;
+package br.ufal.ic.p2.jackut.services.relacionamentos;
 
 import br.ufal.ic.p2.jackut.models.Usuario;
 import br.ufal.ic.p2.jackut.exceptions.paquera.PaqueraExistenteException;
 import br.ufal.ic.p2.jackut.exceptions.paquera.AutoPaqueraException;
 import br.ufal.ic.p2.jackut.exceptions.inimizade.InteracaoComInimigoException;
-import br.ufal.ic.p2.jackut.services.RecadoService;
-import br.ufal.ic.p2.jackut.services.SessaoService;
-import br.ufal.ic.p2.jackut.services.UsuarioService;
+import br.ufal.ic.p2.jackut.services.mensagem.RecadoService;
 
-public class PaqueraService extends RelationshipBaseService {
+public class PaqueraService extends RelacionamentoBaseService {
     private static PaqueraService instance;
     private final RecadoService recadoService;
 
@@ -42,9 +40,9 @@ public class PaqueraService extends RelationshipBaseService {
 
         // Se ambos são paqueras um do outro, envia recado automático
         if (paquera.ehPaquera(usuarioLogin)) {
-            recadoService.enviarRecado("Jackut", usuarioLogin,
+            recadoService.enviarMensagem("Jackut", usuarioLogin,
                     paquera.getAtributo("nome") + " é seu paquera - Recado do Jackut.");
-            recadoService.enviarRecado("Jackut", paqueraLogin,
+            recadoService.enviarMensagem("Jackut", paqueraLogin,
                     usuario.getAtributo("nome") + " é seu paquera - Recado do Jackut.");
         }
 

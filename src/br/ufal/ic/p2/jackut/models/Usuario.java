@@ -22,7 +22,7 @@ public class Usuario implements Serializable {
     private Map<String, String> atributos;
     private List<String> amigos;
     private List<String> convitesEnviados;
-    private Queue<String> recados;
+    private Queue<Mensagem> recados;
     private List<String> comunidades;
     private List<String> idolos;
     private List<String> paqueras;
@@ -147,7 +147,7 @@ public class Usuario implements Serializable {
      *
      * @param recado A mensagem do recado.
      */
-    public void adicionarRecado(String recado) {
+    public void adicionarRecado(Mensagem recado) {
         recados.add(recado);
     }
 
@@ -160,7 +160,7 @@ public class Usuario implements Serializable {
         if (recados.isEmpty()) {
             return null;
         }
-        return recados.poll();
+        return recados.poll().getConteudo();
     }
 
     public void adicionarComunidade(String nomeComunidade) {

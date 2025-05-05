@@ -1,11 +1,13 @@
-package br.ufal.ic.p2.jackut.services;
+package br.ufal.ic.p2.jackut.services.mensagem;
 
 import br.ufal.ic.p2.jackut.exceptions.recado.RecadoNaoEncontradoException;
 import br.ufal.ic.p2.jackut.exceptions.recado.RecadoParaSiMesmoException;
 import br.ufal.ic.p2.jackut.exceptions.inimizade.InteracaoComInimigoException;
+import br.ufal.ic.p2.jackut.models.Mensagem;
 import br.ufal.ic.p2.jackut.models.Usuario;
+import br.ufal.ic.p2.jackut.services.UsuarioService;
 
-public class RecadoService {
+public class RecadoService extends MensagemBaseService {
     private static RecadoService instance;
     private final UsuarioService usuarioService;
 
@@ -22,7 +24,7 @@ public class RecadoService {
         return instance;
     }
 
-    public void enviarRecado(String remetente, String destinatario, String mensagem) {
+    public void enviarMensagem(String remetente, String destinatario, String mensagem) {
         if (remetente.equals(destinatario)) {
             throw new RecadoParaSiMesmoException();
         }
@@ -33,11 +35,11 @@ public class RecadoService {
             throw new InteracaoComInimigoException(usuarioDestinatario.getAtributo("nome"));
         }
 
-        usuarioDestinatario.adicionarRecado(mensagem);
+        usuarioDestinatario.adicionarRecado(new Mensagem(remetente, mensagem));
         usuarioService.salvarDados();
     }
 
-    public String lerRecado(String login) {
+    public String lerMensagem(String login) {
         Usuario usuario = usuarioService.getUsuario(login);
         String recado = usuario.lerRecado();
 
