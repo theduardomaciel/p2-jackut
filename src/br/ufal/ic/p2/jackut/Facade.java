@@ -7,17 +7,20 @@ public class Facade {
     private final SessaoService sessaoService;
     private final AmizadeService amizadeService;
     private final RecadoService recadoService;
+    private final ComunidadeService comunidadeService;
 
     public Facade() {
         this.usuarioService = UsuarioService.getInstance();
         this.sessaoService = SessaoService.getInstance();
         this.amizadeService = AmizadeService.getInstance();
         this.recadoService = RecadoService.getInstance();
+        this.comunidadeService = ComunidadeService.getInstance();
     }
 
     public void zerarSistema() {
         usuarioService.zerarSistema();
         sessaoService.zerarSessoes();
+        comunidadeService.zerarComunidades();
     }
 
     public void criarUsuario(String login, String senha, String nome) {
@@ -58,6 +61,23 @@ public class Facade {
     public String lerRecado(String id) {
         String login = sessaoService.getLoginUsuario(id);
         return recadoService.lerRecado(login);
+    }
+
+    public void criarComunidade(String sessaoId, String nome, String descricao) {
+        String loginDono = sessaoService.getLoginUsuario(sessaoId);
+        comunidadeService.criarComunidade(nome, descricao, loginDono);
+    }
+
+    public String getDescricaoComunidade(String nome) {
+        return comunidadeService.getDescricaoComunidade(nome);
+    }
+
+    public String getDonoComunidade(String nome) {
+        return comunidadeService.getDonoComunidade(nome);
+    }
+
+    public String getMembrosComunidade(String nome) {
+        return comunidadeService.getMembrosComunidade(nome);
     }
 
     public void encerrarSistema() {

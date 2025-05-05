@@ -23,6 +23,7 @@ public class Usuario implements Serializable {
     private List<String> amigos;
     private List<String> convitesEnviados;
     private Queue<String> recados;
+    private List<String> comunidades;
 
     public Usuario(String login, String senha, String nome) {
         this.login = login;
@@ -32,6 +33,7 @@ public class Usuario implements Serializable {
         this.amigos = new ArrayList<>();
         this.convitesEnviados = new ArrayList<>();
         this.recados = new LinkedList<>();
+        this.comunidades = new ArrayList<>();
     }
 
     public String getLogin() {
@@ -43,11 +45,11 @@ public class Usuario implements Serializable {
     }
 
     /**
-     * Obtém o valor de um atributo do usuário.
+     * Obt?m o valor de um atributo do usu?rio.
      *
      * @param atributo O nome do atributo.
      * @return O valor do atributo.
-     * @throws AtributoNaoPreenchidoException Se o atributo não estiver preenchido.
+     * @throws AtributoNaoPreenchidoException Se o atributo n?o estiver preenchido.
      */
     public String getAtributo(String atributo) {
         if (atributo.equalsIgnoreCase("nome")) {
@@ -62,7 +64,7 @@ public class Usuario implements Serializable {
     }
 
     /**
-     * Define o valor de um atributo do usuário.
+     * Define o valor de um atributo do usu?rio.
      *
      * @param atributo O nome do atributo.
      * @param valor O novo valor do atributo.
@@ -76,7 +78,7 @@ public class Usuario implements Serializable {
     }
 
     /**
-     * Obtém a lista de amigos do usuário.
+     * Obt?m a lista de amigos do usu?rio.
      *
      * @return A lista de amigos.
      */
@@ -85,7 +87,7 @@ public class Usuario implements Serializable {
     }
 
     /**
-     * Envia um convite de amizade para outro usuário.
+     * Envia um convite de amizade para outro usu?rio.
      *
      * @param loginAmigo O login do amigo.
      */
@@ -102,7 +104,7 @@ public class Usuario implements Serializable {
     }
 
     /**
-     * Aceita um convite de amizade de outro usuário.
+     * Aceita um convite de amizade de outro usu?rio.
      *
      * @param loginAmigo O login do amigo.
      */
@@ -115,27 +117,27 @@ public class Usuario implements Serializable {
     }
 
     /**
-     * Verifica se há um convite de amizade pendente de outro usuário.
+     * Verifica se h? um convite de amizade pendente de outro usu?rio.
      *
      * @param loginAmigo O login do amigo.
-     * @return true se houver um convite pendente, false caso contrário.
+     * @return true se houver um convite pendente, false caso contr?rio.
      */
     public boolean verificarConvitePendente(String loginAmigo) {
         return convitesEnviados.contains(loginAmigo);
     }
 
     /**
-     * Verifica se outro usuário é amigo.
+     * Verifica se outro usu?rio ? amigo.
      *
      * @param loginAmigo O login do amigo.
-     * @return true se forem amigos, false caso contrário.
+     * @return true se forem amigos, false caso contr?rio.
      */
     public boolean ehAmigo(String loginAmigo) {
         return amigos.contains(loginAmigo);
     }
 
     /**
-     * Adiciona um recado para o usuário.
+     * Adiciona um recado para o usu?rio.
      *
      * @param recado A mensagem do recado.
      */
@@ -144,7 +146,7 @@ public class Usuario implements Serializable {
     }
 
     /**
-     * Lê o próximo recado do usuário.
+     * L? o pr?ximo recado do usu?rio.
      *
      * @return A mensagem do recado.
      */
@@ -153,5 +155,15 @@ public class Usuario implements Serializable {
             return null;
         }
         return recados.poll();
+    }
+
+    public void adicionarComunidade(String nomeComunidade) {
+        if (!comunidades.contains(nomeComunidade)) {
+            comunidades.add(nomeComunidade);
+        }
+    }
+
+    public List<String> getComunidades() {
+        return Collections.unmodifiableList(comunidades);
     }
 }
