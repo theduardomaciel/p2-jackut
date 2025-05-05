@@ -4,7 +4,7 @@ import br.ufal.ic.p2.jackut.models.Usuario;
 import br.ufal.ic.p2.jackut.exceptions.paquera.PaqueraExistenteException;
 import br.ufal.ic.p2.jackut.exceptions.paquera.AutoPaqueraException;
 import br.ufal.ic.p2.jackut.exceptions.inimizade.InteracaoComInimigoException;
-import br.ufal.ic.p2.jackut.services.mensagem.RecadoService;
+import br.ufal.ic.p2.jackut.services.RecadoService;
 
 public class PaqueraService extends RelacionamentoBaseService {
     private static PaqueraService instance;

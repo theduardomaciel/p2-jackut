@@ -1,13 +1,12 @@
-package br.ufal.ic.p2.jackut.services.mensagem;
+package br.ufal.ic.p2.jackut.services;
 
 import br.ufal.ic.p2.jackut.exceptions.recado.RecadoNaoEncontradoException;
 import br.ufal.ic.p2.jackut.exceptions.recado.RecadoParaSiMesmoException;
 import br.ufal.ic.p2.jackut.exceptions.inimizade.InteracaoComInimigoException;
 import br.ufal.ic.p2.jackut.models.Mensagem;
 import br.ufal.ic.p2.jackut.models.Usuario;
-import br.ufal.ic.p2.jackut.services.UsuarioService;
 
-public class RecadoService extends MensagemBaseService {
+public class RecadoService {
     private static RecadoService instance;
     private final UsuarioService usuarioService;
 

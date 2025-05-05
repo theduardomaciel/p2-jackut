@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Queue;
 
 import br.ufal.ic.p2.jackut.exceptions.usuario.AtributoNaoPreenchidoException;
-import br.ufal.ic.p2.jackut.models.relacionamentos.*;
+import br.ufal.ic.p2.jackut.models.relacoes.*;
 
 public class Usuario implements Serializable {
     @Serial
@@ -20,25 +20,25 @@ public class Usuario implements Serializable {
     private String nome;
     private Map<String, String> atributos;
 
-    private AmizadeRelacionamento amizades;
+    private AmizadeRelacao amizades;
     private Queue<Mensagem> recados;
 
-    private ListaRelacionamento comunidades;
-    private ListaRelacionamento idolos;
-    private ListaRelacionamento paqueras;
-    private ListaRelacionamento inimigos;
+    private ListaRelacao comunidades;
+    private ListaRelacao idolos;
+    private ListaRelacao paqueras;
+    private ListaRelacao inimigos;
 
     public Usuario(String login, String senha, String nome) {
         this.login = login;
         this.senha = senha;
         this.nome = nome;
         this.atributos = new HashMap<>();
-        this.amizades = new AmizadeRelacionamento();
+        this.amizades = new AmizadeRelacao();
         this.recados = new LinkedList<>();
-        this.comunidades = new ListaRelacionamento();
-        this.idolos = new ListaRelacionamento();
-        this.paqueras = new ListaRelacionamento();
-        this.inimigos = new ListaRelacionamento();
+        this.comunidades = new ListaRelacao();
+        this.idolos = new ListaRelacao();
+        this.paqueras = new ListaRelacao();
+        this.inimigos = new ListaRelacao();
     }
 
     public String getLogin() {

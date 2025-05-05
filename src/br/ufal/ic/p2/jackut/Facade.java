@@ -1,7 +1,7 @@
 package br.ufal.ic.p2.jackut;
 
 import br.ufal.ic.p2.jackut.services.*;
-import br.ufal.ic.p2.jackut.services.mensagem.RecadoService;
+import br.ufal.ic.p2.jackut.services.RecadoService;
 import br.ufal.ic.p2.jackut.services.relacionamentos.AmizadeService;
 import br.ufal.ic.p2.jackut.services.relacionamentos.IdoloService;
 import br.ufal.ic.p2.jackut.services.relacionamentos.InimizadeService;

@@ -1,13 +1,13 @@
-package br.ufal.ic.p2.jackut.models.relacionamentos;
+package br.ufal.ic.p2.jackut.models.relacoes;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ListaRelacionamento implements Relacionamento {
+public class ListaRelacao implements Relacao {
     private final List<String> lista;
 
-    public ListaRelacionamento() {
+    public ListaRelacao() {
         this.lista = new ArrayList<>();
     }
 

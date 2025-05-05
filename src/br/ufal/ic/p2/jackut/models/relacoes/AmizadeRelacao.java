@@ -1,12 +1,12 @@
-package br.ufal.ic.p2.jackut.models.relacionamentos;
+package br.ufal.ic.p2.jackut.models.relacoes;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AmizadeRelacionamento extends ListaRelacionamento {
+public class AmizadeRelacao extends ListaRelacao {
     private final List<String> convitesEnviados;
 
-    public AmizadeRelacionamento() {
+    public AmizadeRelacao() {
         super();
         this.convitesEnviados = new ArrayList<>();
     }
