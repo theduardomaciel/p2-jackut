@@ -24,7 +24,7 @@ public class InimizadeService extends RelacionamentoBaseService {
         validarAutoRelacionamento(usuarioLogin, inimigoLogin, new AutoInimizadeException());
 
         Usuario usuario = usuarioService.getUsuario(usuarioLogin);
-        Usuario inimigo = usuarioService.getUsuario(inimigoLogin);
+        usuarioService.getUsuario(inimigoLogin); // Verificamos se o inimigo existe
 
         if (usuario.ehInimigo(inimigoLogin)) {
             throw new InimigoExistenteException();
