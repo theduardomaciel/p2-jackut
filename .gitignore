@@ -37,3 +37,6 @@ out/
 
 ### Persistance ###
 *.dat
+
+### Build ###
+*.class

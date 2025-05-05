@@ -1,4 +1,4 @@
-package br.ufal.ic.p2.jackut.services;
+package br.ufal.ic.p2.jackut.services.relationshps;
 
 import br.ufal.ic.p2.jackut.exceptions.amizade.AmizadeJaExistenteException;
 import br.ufal.ic.p2.jackut.exceptions.amizade.AmizadeParaSiMesmoException;
@@ -6,14 +6,15 @@ import br.ufal.ic.p2.jackut.exceptions.amizade.ConviteJaEnviadoException;
 import br.ufal.ic.p2.jackut.exceptions.inimizade.InteracaoComInimigoException;
 import br.ufal.ic.p2.jackut.exceptions.usuario.UsuarioNaoCadastradoException;
 import br.ufal.ic.p2.jackut.models.Usuario;
+import br.ufal.ic.p2.jackut.services.UsuarioService;
 
-public class AmizadeService {
+public class AmizadeService extends RelationshipBaseService {
     private static AmizadeService instance;
-    private final UsuarioService usuarioService;
 
     // Construtor privado para implementar o Singleton
-    private AmizadeService() {
-        this.usuarioService = UsuarioService.getInstance();
+    private AmizadeService()
+    {
+        super();
     }
 
     // Método para obter a instância única da classe
@@ -25,16 +26,12 @@ public class AmizadeService {
     }
 
     public void adicionarAmigo(String login, String amigoLogin) {
-        if (login.equals(amigoLogin)) {
-            throw new AmizadeParaSiMesmoException();
-        }
+        validarAutoRelacionamento(login, amigoLogin, new AmizadeParaSiMesmoException());
 
         Usuario usuario = usuarioService.getUsuario(login);
         Usuario amigo = usuarioService.getUsuario(amigoLogin);
 
-        if (usuario.ehInimigo(amigoLogin) || amigo.ehInimigo(login)) {
-            throw new InteracaoComInimigoException(amigo.getAtributo("nome"));
-        }
+        validarInimizade(usuario, amigo, new InteracaoComInimigoException(amigo.getAtributo("nome")));
 
         if (usuario.ehAmigo(amigoLogin)) {
             throw new AmizadeJaExistenteException();

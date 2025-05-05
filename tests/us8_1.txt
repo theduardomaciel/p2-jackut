@@ -6,6 +6,57 @@ criarUsuario login=jpsauve senha=sauvejp nome="Jacques Sauve"
 s1=abrirSessao login=jpsauve senha=sauvejp
 
 ##################
+# Testes da relação fã-ídolo
+# Regras: um usuário pode adicionar outro como ídolo e passa a ser chamado seu fã; essa relação é independente do fato de os usuários serem amigos;
+# a informação de que usuário é fã de quem é pública
+##################
+
+criarUsuario login=fadejacques senha=seuqcajedaf nome="Fã de Jacques"
+s2=abrirSessao login=fadejacques senha=seuqcajedaf
+
+expect false ehAmigo login=fadejacques amigo=jpsauve
+expect false ehAmigo login=jpsauve amigo=fadejacques
+expect false ehFa login=fadejacques idolo=jpsauve
+expect false ehFa login=jpsauve idolo=fadejacques
+
+adicionarIdolo id=${s2} idolo=jpsauve
+
+expect false ehAmigo login=fadejacques amigo=jpsauve
+expect false ehAmigo login=jpsauve amigo=fadejacques
+expect true ehFa login=fadejacques idolo=jpsauve
+expect false ehFa login=jpsauve idolo=fadejacques
+
+expect {} getFas login=fadejacques
+expect {fadejacques} getFas login=jpsauve
+
+# um usuário pode ter mais de um fã
+criarUsuario login=fa2dejacques senha=seuqcajedaf nome="Fã 2 de Jacques"
+s3=abrirSessao login=fa2dejacques senha=seuqcajedaf
+
+adicionarIdolo id=${s3} idolo=jpsauve
+
+expect true ehFa login=fa2dejacques idolo=jpsauve
+expect false ehFa login=jpsauve idolo=fa2dejacques
+
+expect {fadejacques,fa2dejacques} getFas login=jpsauve
+
+# um usuário pode ter mais de um ídolo
+adicionarIdolo id=${s3} idolo=fadejacques
+
+expect true ehFa login=fa2dejacques idolo=jpsauve
+expect true ehFa login=fa2dejacques idolo=fadejacques
+
+expect {} getFas login=fa2dejacques
+expect {fadejacques,fa2dejacques} getFas login=jpsauve
+expect {fa2dejacques} getFas login=fadejacques
+
+# tratamento de erros
+
+expectError "Usuário já está adicionado como ídolo." adicionarIdolo id=${s3} idolo=jpsauve
+expectError "Usuário não cadastrado." adicionarIdolo id=${s3} idolo=qwerty
+expectError "Usuário não pode ser fã de si mesmo." adicionarIdolo id=${s3} idolo=fa2dejacques
+
+##################
 # Testes da relação de paquera
 # Regras: um usuário pode adicionar outro como paquera, e esta informação é privada para quem adicionou; não precisam ser amigos; entretanto, se ambos se adicionarem como paquera mutuamente, um recado automático do
 # sistema é enviado para ambos
@@ -118,4 +169,3 @@ s4=abrirSessao login=inimigopersistentedejacques senha=abcdef
 adicionarInimigo id=${s4} inimigo=jacquespersistente
 
 encerrarSistema
-quit

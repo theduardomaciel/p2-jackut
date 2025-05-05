@@ -1,18 +1,18 @@
-package br.ufal.ic.p2.jackut.services;
+package br.ufal.ic.p2.jackut.services.relationshps;
 
 import br.ufal.ic.p2.jackut.models.Usuario;
 import br.ufal.ic.p2.jackut.exceptions.idolo.IdoloExistenteException;
 import br.ufal.ic.p2.jackut.exceptions.idolo.AutoIdolatriaException;
 import br.ufal.ic.p2.jackut.exceptions.inimizade.InteracaoComInimigoException;
+import br.ufal.ic.p2.jackut.services.SessaoService;
+import br.ufal.ic.p2.jackut.services.UsuarioService;
 
-public class IdoloService {
+public class IdoloService extends RelationshipBaseService {
     private static IdoloService instance;
-    private final UsuarioService usuarioService;
-    private final SessaoService sessaoService;
 
+    // Construtor privado para implementar o Singleton
     private IdoloService() {
-        this.usuarioService = UsuarioService.getInstance();
-        this.sessaoService = SessaoService.getInstance();
+        super();
     }
 
     public static synchronized IdoloService getInstance() {
@@ -27,13 +27,8 @@ public class IdoloService {
         Usuario fa = usuarioService.getUsuario(faNome);
         Usuario idolo = usuarioService.getUsuario(idoloLogin);
 
-        if (faNome.equals(idoloLogin)) {
-            throw new AutoIdolatriaException();
-        }
-
-        if (fa.ehInimigo(idoloLogin) || idolo.ehInimigo(faNome)) {
-            throw new InteracaoComInimigoException(idolo.getAtributo("nome"));
-        }
+        validarAutoRelacionamento(faNome, idoloLogin, new AutoIdolatriaException());
+        validarInimizade(fa, idolo, new InteracaoComInimigoException(idolo.getAtributo("nome")));
 
         if (fa.ehFa(idoloLogin)) {
             throw new IdoloExistenteException();

@@ -28,7 +28,6 @@ public class RecadoService {
         }
 
         Usuario usuarioDestinatario = usuarioService.getUsuario(destinatario);
-        Usuario usuarioRemetente = usuarioService.getUsuario(remetente);
 
         if (usuarioDestinatario.ehInimigo(remetente)) {
             throw new InteracaoComInimigoException(usuarioDestinatario.getAtributo("nome"));

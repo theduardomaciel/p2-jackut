@@ -1,19 +1,18 @@
-package br.ufal.ic.p2.jackut.services;
+package br.ufal.ic.p2.jackut.services.relationshps;
 
 import br.ufal.ic.p2.jackut.models.Usuario;
 import br.ufal.ic.p2.jackut.exceptions.paquera.PaqueraExistenteException;
 import br.ufal.ic.p2.jackut.exceptions.paquera.AutoPaqueraException;
 import br.ufal.ic.p2.jackut.exceptions.inimizade.InteracaoComInimigoException;
+import br.ufal.ic.p2.jackut.services.RecadoService;
+import br.ufal.ic.p2.jackut.services.SessaoService;
+import br.ufal.ic.p2.jackut.services.UsuarioService;
 
-public class PaqueraService {
+public class PaqueraService extends RelationshipBaseService {
     private static PaqueraService instance;
-    private final UsuarioService usuarioService;
-    private final SessaoService sessaoService;
     private final RecadoService recadoService;
 
     private PaqueraService() {
-        this.usuarioService = UsuarioService.getInstance();
-        this.sessaoService = SessaoService.getInstance();
         this.recadoService = RecadoService.getInstance();
     }
 
@@ -27,17 +26,12 @@ public class PaqueraService {
     public void adicionarPaquera(String sessaoId, String paqueraLogin) {
         String usuarioLogin = sessaoService.getLoginUsuario(sessaoId);
 
-        if (usuarioLogin.equals(paqueraLogin)) {
-            throw new AutoPaqueraException();
-        }
+        validarAutoRelacionamento(usuarioLogin, paqueraLogin, new AutoPaqueraException());
 
         Usuario usuario = usuarioService.getUsuario(usuarioLogin);
         Usuario paquera = usuarioService.getUsuario(paqueraLogin);
 
-        // Verifica se o usuário e a paquera são inimigos
-        if (paquera.ehInimigo(usuarioLogin) || usuario.ehInimigo(paqueraLogin)) {
-            throw new InteracaoComInimigoException(paquera.getAtributo("nome"));
-        }
+        validarInimizade(usuario, paquera, new InteracaoComInimigoException(paquera.getAtributo("nome")));
 
         // Verifica se a paquera já existe
         if (usuario.ehPaquera(paqueraLogin)) {

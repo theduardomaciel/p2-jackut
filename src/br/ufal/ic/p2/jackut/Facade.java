@@ -1,6 +1,10 @@
 package br.ufal.ic.p2.jackut;
 
 import br.ufal.ic.p2.jackut.services.*;
+import br.ufal.ic.p2.jackut.services.relationshps.AmizadeService;
+import br.ufal.ic.p2.jackut.services.relationshps.IdoloService;
+import br.ufal.ic.p2.jackut.services.relationshps.InimizadeService;
+import br.ufal.ic.p2.jackut.services.relationshps.PaqueraService;
 
 public class Facade {
     private final UsuarioService usuarioService;
