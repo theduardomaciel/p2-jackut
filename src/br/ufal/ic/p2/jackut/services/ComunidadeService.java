@@ -3,6 +3,7 @@ package br.ufal.ic.p2.jackut.services;
 import br.ufal.ic.p2.jackut.exceptions.comunidade.ComunidadeExistenteException;
 import br.ufal.ic.p2.jackut.exceptions.comunidade.ComunidadeNaoExisteException;
 import br.ufal.ic.p2.jackut.exceptions.comunidade.UsuarioJaMembroException;
+import br.ufal.ic.p2.jackut.exceptions.mensagem.NaoHaMensagensException;
 import br.ufal.ic.p2.jackut.models.Comunidade;
 import br.ufal.ic.p2.jackut.models.Usuario;
 import java.util.HashMap;
@@ -66,6 +67,39 @@ public class ComunidadeService {
 
         comunidade.adicionarMembro(usuario);
         usuarioService.salvarDados();
+    }
+
+    public void enviarMensagem(String nome, String loginRemetente, String mensagem) {
+        Comunidade comunidade = getComunidade(nome);
+        comunidade.adicionarMensagem(mensagem, loginRemetente);
+    }
+
+    // Outro método, caso a verificação de membro seja necessária no futuro
+    /*public void enviarMensagem(String nome, String loginRemetente, String mensagem) {
+        Comunidade comunidade = getComunidade(nome);
+        Usuario remetente = usuarioService.getUsuario(loginRemetente);
+
+        // Verifica se o remetente é membro da comunidade
+        if (!comunidade.contemMembro(remetente)) {
+            throw new UsuarioNaoMembroException();
+        }
+
+        comunidade.adicionarMensagem(mensagem, loginRemetente);
+        usuarioService.salvarDados();
+    }*/
+
+    public String lerMensagem(String login) {
+        // Procura a mensagem em todas as comunidades
+        for (Comunidade comunidade : comunidades.values()) {
+            if (comunidade.getMembrosLogins().contains(login)) {
+                try {
+                    return comunidade.lerMensagem(login);
+                } catch (NaoHaMensagensException ignored) {
+                    // Continue procurando em outras comunidades
+                }
+            }
+        }
+        throw new NaoHaMensagensException();
     }
 
     private Comunidade getComunidade(String nome) {
