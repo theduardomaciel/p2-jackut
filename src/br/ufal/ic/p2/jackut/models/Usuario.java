@@ -45,11 +45,11 @@ public class Usuario implements Serializable {
     }
 
     /**
-     * Obt?m o valor de um atributo do usu?rio.
+     * Obtém o valor de um atributo do usuário.
      *
      * @param atributo O nome do atributo.
      * @return O valor do atributo.
-     * @throws AtributoNaoPreenchidoException Se o atributo n?o estiver preenchido.
+     * @throws AtributoNaoPreenchidoException Se o atributo não estiver preenchido.
      */
     public String getAtributo(String atributo) {
         if (atributo.equalsIgnoreCase("nome")) {
@@ -64,7 +64,7 @@ public class Usuario implements Serializable {
     }
 
     /**
-     * Define o valor de um atributo do usu?rio.
+     * Define o valor de um atributo do usuário.
      *
      * @param atributo O nome do atributo.
      * @param valor O novo valor do atributo.
@@ -78,7 +78,7 @@ public class Usuario implements Serializable {
     }
 
     /**
-     * Obt?m a lista de amigos do usu?rio.
+     * Obtém a lista de amigos do usuário.
      *
      * @return A lista de amigos.
      */
@@ -87,7 +87,7 @@ public class Usuario implements Serializable {
     }
 
     /**
-     * Envia um convite de amizade para outro usu?rio.
+     * Envia um convite de amizade para outro usuário.
      *
      * @param loginAmigo O login do amigo.
      */
@@ -104,7 +104,7 @@ public class Usuario implements Serializable {
     }
 
     /**
-     * Aceita um convite de amizade de outro usu?rio.
+     * Aceita um convite de amizade de outro usuário.
      *
      * @param loginAmigo O login do amigo.
      */
@@ -117,27 +117,27 @@ public class Usuario implements Serializable {
     }
 
     /**
-     * Verifica se h? um convite de amizade pendente de outro usu?rio.
+     * Verifica se há um convite de amizade pendente de outro usuário.
      *
      * @param loginAmigo O login do amigo.
-     * @return true se houver um convite pendente, false caso contr?rio.
+     * @return true se houver um convite pendente, false caso contrário.
      */
     public boolean verificarConvitePendente(String loginAmigo) {
         return convitesEnviados.contains(loginAmigo);
     }
 
     /**
-     * Verifica se outro usu?rio ? amigo.
+     * Verifica se outro usuário é amigo.
      *
      * @param loginAmigo O login do amigo.
-     * @return true se forem amigos, false caso contr?rio.
+     * @return true se forem amigos, false caso contrário.
      */
     public boolean ehAmigo(String loginAmigo) {
         return amigos.contains(loginAmigo);
     }
 
     /**
-     * Adiciona um recado para o usu?rio.
+     * Adiciona um recado para o usuário.
      *
      * @param recado A mensagem do recado.
      */
@@ -146,7 +146,7 @@ public class Usuario implements Serializable {
     }
 
     /**
-     * L? o pr?ximo recado do usu?rio.
+     * Lê o próximo recado do usuário.
      *
      * @return A mensagem do recado.
      */

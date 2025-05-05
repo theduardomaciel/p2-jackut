@@ -14,4 +14,3 @@ expect {jpsauve} getMembrosComunidade nome="UFCG2"
 expect {oabath} getMembrosComunidade nome="Alunos da UFCG"
 
 encerrarSistema
-quit

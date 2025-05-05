@@ -74,6 +74,16 @@ public class UsuarioService {
         return usuarios.get(login);
     }
 
+    public String getComunidades(String login) {
+        Usuario usuario = getUsuario(login);
+        var comunidades = usuario.getComunidades();
+
+        if (comunidades.isEmpty()) {
+            return "{}";
+        }
+        return "{" + String.join(",", comunidades) + "}";
+    }
+
     public void salvarDados() {
         db.salvarDados(usuarios);
     }

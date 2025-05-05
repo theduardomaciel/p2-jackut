@@ -1,5 +1,6 @@
 package br.ufal.ic.p2.jackut;
 
+import br.ufal.ic.p2.jackut.models.Comunidade;
 import br.ufal.ic.p2.jackut.services.*;
 
 public class Facade {
@@ -68,6 +69,10 @@ public class Facade {
         comunidadeService.criarComunidade(nome, descricao, loginDono);
     }
 
+    public String getComunidades(String login) {
+        return comunidadeService.getComunidades(login);
+    }
+
     public String getDescricaoComunidade(String nome) {
         return comunidadeService.getDescricaoComunidade(nome);
     }
@@ -78,6 +83,11 @@ public class Facade {
 
     public String getMembrosComunidade(String nome) {
         return comunidadeService.getMembrosComunidade(nome);
+    }
+
+    public void adicionarComunidade(String sessaoId, String nome) {
+        String loginUsuario = sessaoService.getLoginUsuario(sessaoId);
+        comunidadeService.adicionarMembro(nome, loginUsuario);
     }
 
     public void encerrarSistema() {

@@ -2,6 +2,7 @@ package br.ufal.ic.p2.jackut.services;
 
 import br.ufal.ic.p2.jackut.exceptions.comunidade.ComunidadeExistenteException;
 import br.ufal.ic.p2.jackut.exceptions.comunidade.ComunidadeNaoExisteException;
+import br.ufal.ic.p2.jackut.exceptions.comunidade.UsuarioJaMembroException;
 import br.ufal.ic.p2.jackut.models.Comunidade;
 import br.ufal.ic.p2.jackut.models.Usuario;
 import java.util.HashMap;
@@ -55,11 +56,27 @@ public class ComunidadeService {
         return "{" + String.join(",", comunidade.getMembrosLogins()) + "}";
     }
 
+    public void adicionarMembro(String nome, String loginUsuario) {
+        Comunidade comunidade = getComunidade(nome);
+        Usuario usuario = usuarioService.getUsuario(loginUsuario);
+        
+        if (comunidade.contemMembro(usuario)) {
+            throw new UsuarioJaMembroException();
+        }
+
+        comunidade.adicionarMembro(usuario);
+        usuarioService.salvarDados();
+    }
+
     private Comunidade getComunidade(String nome) {
         if (!comunidades.containsKey(nome)) {
             throw new ComunidadeNaoExisteException();
         }
         return comunidades.get(nome);
+    }
+
+    public String getComunidades(String login) {
+        return usuarioService.getComunidades(login);
     }
 
     public void zerarComunidades() {
