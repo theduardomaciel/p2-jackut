@@ -11,8 +11,7 @@ public class AmizadeService extends RelacionamentoBaseService {
     private static AmizadeService instance;
 
     // Construtor privado para implementar o Singleton
-    private AmizadeService()
-    {
+    private AmizadeService() {
         super();
     }
 
@@ -45,7 +44,7 @@ public class AmizadeService extends RelacionamentoBaseService {
             throw new ConviteJaEnviadoException();
         }
 
-        usuarioService.salvarDados();
+        salvarAlteracoes();
     }
 
     public boolean ehAmigo(String login, String amigoLogin) {
@@ -59,11 +58,6 @@ public class AmizadeService extends RelacionamentoBaseService {
 
     public String getAmigos(String login) {
         Usuario usuario = usuarioService.getUsuario(login);
-        var amigos = usuario.getAmigos();
-
-        if (amigos.isEmpty()) {
-            return "{}";
-        }
-        return "{" + String.join(",", amigos) + "}";
+        return formatarLista(usuario.getAmigos());
     }
 }

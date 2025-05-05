@@ -26,9 +26,11 @@ public class InimizadeService extends RelacionamentoBaseService {
         Usuario usuario = usuarioService.getUsuario(usuarioLogin);
         Usuario inimigo = usuarioService.getUsuario(inimigoLogin);
 
-        validarInimizade(usuario, inimigo, new InimigoExistenteException());
+        if (usuario.ehInimigo(inimigoLogin)) {
+            throw new InimigoExistenteException();
+        }
 
         usuario.adicionarInimigo(inimigoLogin);
-        usuarioService.salvarDados();
+        salvarAlteracoes();
     }
 }

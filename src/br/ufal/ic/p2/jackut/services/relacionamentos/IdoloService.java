@@ -22,10 +22,12 @@ public class IdoloService extends RelacionamentoBaseService {
 
     public void adicionarIdolo(String sessaoId, String idoloLogin) {
         String faNome = sessaoService.getLoginUsuario(sessaoId);
+
+        validarAutoRelacionamento(faNome, idoloLogin, new AutoIdolatriaException());
+
         Usuario fa = usuarioService.getUsuario(faNome);
         Usuario idolo = usuarioService.getUsuario(idoloLogin);
 
-        validarAutoRelacionamento(faNome, idoloLogin, new AutoIdolatriaException());
         validarInimizade(fa, idolo, new InteracaoComInimigoException(idolo.getAtributo("nome")));
 
         if (fa.ehFa(idoloLogin)) {
@@ -33,7 +35,7 @@ public class IdoloService extends RelacionamentoBaseService {
         }
 
         fa.adicionarIdolo(idoloLogin);
-        usuarioService.salvarDados();
+        salvarAlteracoes();
     }
 
     public boolean ehFa(String login, String idoloLogin) {
@@ -47,9 +49,6 @@ public class IdoloService extends RelacionamentoBaseService {
                 .map(Usuario::getLogin)
                 .toList();
 
-        if (fas.isEmpty()) {
-            return "{}";
-        }
-        return "{" + String.join(",", fas) + "}";
+        return formatarLista(fas);
     }
 }

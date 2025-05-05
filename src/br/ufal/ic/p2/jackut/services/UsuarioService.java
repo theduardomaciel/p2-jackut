@@ -6,6 +6,7 @@ import br.ufal.ic.p2.jackut.exceptions.usuario.SenhaInvalidaException;
 import br.ufal.ic.p2.jackut.exceptions.usuario.UsuarioNaoCadastradoException;
 import br.ufal.ic.p2.jackut.models.Usuario;
 import br.ufal.ic.p2.jackut.persistance.Database;
+import br.ufal.ic.p2.jackut.utils.FormatadorUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,7 +28,7 @@ public class UsuarioService {
         }
     }
 
-    // M?todo para obter a instãncia única
+    // Método para obter a instância única
     public static synchronized UsuarioService getInstance() {
         if (instance == null) {
             instance = new UsuarioService();
@@ -59,7 +60,7 @@ public class UsuarioService {
     }
 
     public String getAtributoUsuario(String login, String atributo) {
-        Usuario usuario = getUsuario(login); // Lan?a "Usu?rio n?o cadastrado" se o login n?o existir
+        Usuario usuario = getUsuario(login); // Lança "Usuário n?o cadastrado" se o login n?o existir
         return usuario.getAtributo(atributo);
     }
 
@@ -71,8 +72,6 @@ public class UsuarioService {
 
     public Usuario getUsuario(String login) {
         if (!usuarios.containsKey(login) && !login.equals("Jackut")) {
-            // System.out.println("Usuário de login " + login + " não encontrado.");
-            // System.out.println("Usuários atuais: " + usuarios.keySet());
             throw new UsuarioNaoCadastradoException();
         }
         return usuarios.get(login);
@@ -80,12 +79,7 @@ public class UsuarioService {
 
     public String getComunidades(String login) {
         Usuario usuario = getUsuario(login);
-        var comunidades = usuario.getComunidades();
-
-        if (comunidades.isEmpty()) {
-            return "{}";
-        }
-        return "{" + String.join(",", comunidades) + "}";
+        return FormatadorUtil.formatarStrings(usuario.getComunidades());
     }
 
     public void salvarDados() {

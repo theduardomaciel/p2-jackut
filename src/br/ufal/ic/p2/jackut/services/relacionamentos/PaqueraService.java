@@ -11,6 +11,7 @@ public class PaqueraService extends RelacionamentoBaseService {
     private final RecadoService recadoService;
 
     private PaqueraService() {
+        super();
         this.recadoService = RecadoService.getInstance();
     }
 
@@ -46,22 +47,16 @@ public class PaqueraService extends RelacionamentoBaseService {
                     usuario.getAtributo("nome") + " é seu paquera - Recado do Jackut.");
         }
 
-        usuarioService.salvarDados();
+        salvarAlteracoes();
     }
 
     public boolean ehPaquera(String sessaoId, String paqueraLogin) {
-        String usuarioLogin = sessaoService.getLoginUsuario(sessaoId);
-        Usuario usuario = usuarioService.getUsuario(usuarioLogin);
+        Usuario usuario = getUsuarioPorSessao(sessaoId);
         return usuario.ehPaquera(paqueraLogin);
     }
 
     public String getPaqueras(String sessaoId) {
-        String usuarioLogin = sessaoService.getLoginUsuario(sessaoId);
-        Usuario usuario = usuarioService.getUsuario(usuarioLogin);
-        var paqueras = usuario.getPaqueras();
-        if (paqueras.isEmpty()) {
-            return "{}";
-        }
-        return "{" + String.join(",", paqueras) + "}";
+        Usuario usuario = getUsuarioPorSessao(sessaoId);
+        return formatarLista(usuario.getPaqueras());
     }
 }

@@ -6,6 +6,7 @@ import br.ufal.ic.p2.jackut.exceptions.comunidade.UsuarioJaMembroException;
 import br.ufal.ic.p2.jackut.exceptions.mensagem.NaoHaMensagensException;
 import br.ufal.ic.p2.jackut.models.Comunidade;
 import br.ufal.ic.p2.jackut.models.Usuario;
+import br.ufal.ic.p2.jackut.utils.FormatadorUtil;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -54,13 +55,13 @@ public class ComunidadeService {
 
     public String getMembrosComunidade(String nome) {
         Comunidade comunidade = getComunidade(nome);
-        return "{" + String.join(",", comunidade.getMembrosLogins()) + "}";
+        return FormatadorUtil.formatarStrings(comunidade.getMembrosLogins());
     }
 
     public void adicionarMembro(String nome, String loginUsuario) {
         Comunidade comunidade = getComunidade(nome);
         Usuario usuario = usuarioService.getUsuario(loginUsuario);
-        
+
         if (comunidade.contemMembro(usuario)) {
             throw new UsuarioJaMembroException();
         }
@@ -104,7 +105,9 @@ public class ComunidadeService {
     }
 
     public void removerComunidades(String login) {
-        for (Comunidade comunidade : comunidades.values()) {
+        var comunidadesExistentes = new HashMap<>(comunidades);
+
+        for (Comunidade comunidade : comunidadesExistentes.values()) {
             // Caso o usuário seja dono, excluímos a comunidade
             if (comunidade.getLoginDono().equals(login)) {
                 comunidades.remove(comunidade.getNome());

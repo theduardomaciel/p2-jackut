@@ -1,16 +1,15 @@
 package br.ufal.ic.p2.jackut.models;
 
-import br.ufal.ic.p2.jackut.exceptions.usuario.AtributoNaoPreenchidoException;
-
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
-import java.util.Collections;
+
+import br.ufal.ic.p2.jackut.exceptions.usuario.AtributoNaoPreenchidoException;
+import br.ufal.ic.p2.jackut.models.relacionamentos.*;
 
 public class Usuario implements Serializable {
     @Serial
@@ -20,26 +19,26 @@ public class Usuario implements Serializable {
     private String senha;
     private String nome;
     private Map<String, String> atributos;
-    private List<String> amigos;
-    private List<String> convitesEnviados;
+
+    private AmizadeRelacionamento amizades;
     private Queue<Mensagem> recados;
-    private List<String> comunidades;
-    private List<String> idolos;
-    private List<String> paqueras;
-    private List<String> inimigos;
+
+    private ListaRelacionamento comunidades;
+    private ListaRelacionamento idolos;
+    private ListaRelacionamento paqueras;
+    private ListaRelacionamento inimigos;
 
     public Usuario(String login, String senha, String nome) {
         this.login = login;
         this.senha = senha;
         this.nome = nome;
         this.atributos = new HashMap<>();
-        this.amigos = new ArrayList<>();
-        this.convitesEnviados = new ArrayList<>();
+        this.amizades = new AmizadeRelacionamento();
         this.recados = new LinkedList<>();
-        this.comunidades = new ArrayList<>();
-        this.idolos = new ArrayList<>();
-        this.paqueras = new ArrayList<>();
-        this.inimigos = new ArrayList<>();
+        this.comunidades = new ListaRelacionamento();
+        this.idolos = new ListaRelacionamento();
+        this.paqueras = new ListaRelacionamento();
+        this.inimigos = new ListaRelacionamento();
     }
 
     public String getLogin() {
@@ -83,64 +82,73 @@ public class Usuario implements Serializable {
         }
     }
 
-    /**
-     * Obtém a lista de amigos do usuário.
-     *
-     * @return A lista de amigos.
-     */
+    // Amizades
+
     public List<String> getAmigos() {
-        return Collections.unmodifiableList(amigos);
+        return amizades.listar();
     }
 
-    /**
-     * Envia um convite de amizade para outro usuário.
-     *
-     * @param loginAmigo O login do amigo.
-     */
     public void enviarConviteAmizade(String loginAmigo) {
-        if (amigos.contains(loginAmigo)) {
-            return;
-        }
-
-        if (convitesEnviados.contains(loginAmigo)) {
-            return;
-        }
-
-        convitesEnviados.add(loginAmigo);
+        amizades.enviarConvite(loginAmigo);
     }
 
-    /**
-     * Aceita um convite de amizade de outro usuário.
-     *
-     * @param loginAmigo O login do amigo.
-     */
     public void aceitarAmizade(String loginAmigo) {
-        if (amigos.contains(loginAmigo)) {
-            return;
+        if (!amizades.contem(loginAmigo)) {
+            amizades.adicionar(loginAmigo);
         }
-
-        amigos.add(loginAmigo);
     }
 
-    /**
-     * Verifica se há um convite de amizade pendente de outro usuário.
-     *
-     * @param loginAmigo O login do amigo.
-     * @return true se houver um convite pendente, false caso contrário.
-     */
     public boolean verificarConvitePendente(String loginAmigo) {
-        return convitesEnviados.contains(loginAmigo);
+        return amizades.temConvitePendente(loginAmigo);
     }
 
-    /**
-     * Verifica se outro usuário é amigo.
-     *
-     * @param loginAmigo O login do amigo.
-     * @return true se forem amigos, false caso contrário.
-     */
     public boolean ehAmigo(String loginAmigo) {
-        return amigos.contains(loginAmigo);
+        return amizades.contem(loginAmigo);
     }
+
+    // Relacionamentos
+
+    public void adicionarComunidade(String nomeComunidade) {
+        comunidades.adicionar(nomeComunidade);
+    }
+
+    public List<String> getComunidades() {
+        return comunidades.listar();
+    }
+
+    public boolean ehFa(String idolo) {
+        return idolos.contem(idolo);
+    }
+
+    public void adicionarIdolo(String idolo) {
+        idolos.adicionar(idolo);
+    }
+
+    public boolean ehPaquera(String paquera) {
+        return paqueras.contem(paquera);
+    }
+
+    public void adicionarPaquera(String paquera) {
+        paqueras.adicionar(paquera);
+    }
+
+    public List<String> getPaqueras() {
+        return paqueras.listar();
+    }
+
+    public void adicionarInimigo(String inimigo) {
+        inimigos.adicionar(inimigo);
+    }
+
+    public boolean ehInimigo(String inimigo) {
+        return inimigos.contem(inimigo);
+    }
+
+    public void removerComunidade(String nomeComunidade) {
+        comunidades.remover(nomeComunidade);
+    }
+
+    // Recados
 
     /**
      * Adiciona um recado para o usuário.
@@ -165,57 +173,5 @@ public class Usuario implements Serializable {
 
     public void removerRecados(String login) {
         recados.removeIf(recado -> recado.getRemetente().equals(login));
-    }
-
-    public void adicionarComunidade(String nomeComunidade) {
-        if (!comunidades.contains(nomeComunidade)) {
-            comunidades.add(nomeComunidade);
-        }
-    }
-
-    public List<String> getComunidades() {
-        return Collections.unmodifiableList(comunidades);
-    }
-
-    public boolean ehFa(String idolo) {
-        return idolos.contains(idolo);
-    }
-
-    public void adicionarIdolo(String idolo) {
-        if (!idolos.contains(idolo)) {
-            idolos.add(idolo);
-        }
-    }
-
-    public List<String> getFas() {
-        return Collections.unmodifiableList(idolos);
-    }
-
-    public boolean ehPaquera(String paquera) {
-        return paqueras.contains(paquera);
-    }
-
-    public void adicionarPaquera(String paquera) {
-        if (!paqueras.contains(paquera)) {
-            paqueras.add(paquera);
-        }
-    }
-
-    public List<String> getPaqueras() {
-        return Collections.unmodifiableList(paqueras);
-    }
-
-    public void adicionarInimigo(String inimigo) {
-        if (!inimigos.contains(inimigo)) {
-            inimigos.add(inimigo);
-        }
-    }
-
-    public boolean ehInimigo(String inimigo) {
-        return inimigos.contains(inimigo);
-    }
-
-    public void removerComunidade(String nomeComunidade) {
-        comunidades.remove(nomeComunidade);
     }
 }
