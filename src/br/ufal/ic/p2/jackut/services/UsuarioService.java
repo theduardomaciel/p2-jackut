@@ -95,4 +95,24 @@ public class UsuarioService {
     public Collection<Usuario> getTodosUsuarios() {
         return Collections.unmodifiableCollection(usuarios.values());
     }
+
+    public void removerUsuario(String login) {
+        if (!usuarios.containsKey(login)) {
+            throw new UsuarioNaoCadastradoException();
+        }
+        usuarios.remove(login);
+        salvarDados();
+    }
+
+    public void removerComunidade(String login, String nome) {
+        Usuario usuario = getUsuario(login);
+        usuario.removerComunidade(nome);
+        salvarDados();
+    }
+
+    public void removerRecados(String login, String destinatario) {
+        Usuario usuario = getUsuario(login);
+        usuario.removerRecados(destinatario);
+        salvarDados();
+    }
 }

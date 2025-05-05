@@ -163,6 +163,10 @@ public class Usuario implements Serializable {
         return recados.poll().getConteudo();
     }
 
+    public void removerRecados(String login) {
+        recados.removeIf(recado -> recado.getRemetente().equals(login));
+    }
+
     public void adicionarComunidade(String nomeComunidade) {
         if (!comunidades.contains(nomeComunidade)) {
             comunidades.add(nomeComunidade);
@@ -209,5 +213,9 @@ public class Usuario implements Serializable {
 
     public boolean ehInimigo(String inimigo) {
         return inimigos.contains(inimigo);
+    }
+
+    public void removerComunidade(String nomeComunidade) {
+        comunidades.remove(nomeComunidade);
     }
 }

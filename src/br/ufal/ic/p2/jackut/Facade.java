@@ -141,4 +141,16 @@ public class Facade {
     public void encerrarSistema() {
         usuarioService.salvarDados();
     }
+
+    public void removerUsuario(String id) {
+        String login = sessaoService.getLoginUsuario(id);
+
+        // Excluímos as comunidades do usuário
+        comunidadeService.removerComunidades(login);
+
+        // Excluímos os recados enviados pelo usuário
+        recadoService.removerRecados(login);
+
+        usuarioService.removerUsuario(login);
+    }
 }

@@ -102,4 +102,22 @@ public class ComunidadeService {
     public void zerarComunidades() {
         comunidades.clear();
     }
+
+    public void removerComunidades(String login) {
+        for (Comunidade comunidade : comunidades.values()) {
+            // Caso o usuário seja dono, excluímos a comunidade
+            if (comunidade.getLoginDono().equals(login)) {
+                comunidades.remove(comunidade.getNome());
+
+                // Removemos os membros da comunidade
+                for (Usuario membro : comunidade.getMembros()) {
+                    usuarioService.removerComunidade(membro.getLogin(), comunidade.getNome());
+                }
+            } else {
+                // Caso contrário, removemos o usuário da comunidade
+                Usuario usuario = usuarioService.getUsuario(login);
+                comunidade.removerMembro(usuario);
+            }
+        }
+    }
 }

@@ -42,6 +42,10 @@ public class Comunidade implements Serializable {
         return dono.getLogin();
     }
 
+    public List<Usuario> getMembros() {
+        return new ArrayList<>(membros);
+    }
+
     public List<String> getMembrosLogins() {
         return membros.stream()
                 .map(Usuario::getLogin)
@@ -73,5 +77,13 @@ public class Comunidade implements Serializable {
             throw new NaoHaMensagensException();
         }
         return mensagens.poll().getConteudo();
+    }
+
+    public void removerMembro(Usuario usuario) {
+        if (membros.contains(usuario)) {
+            membros.remove(usuario);
+            mensagensPorUsuario.remove(usuario.getLogin());
+            usuario.removerComunidade(nome);
+        }
     }
 }

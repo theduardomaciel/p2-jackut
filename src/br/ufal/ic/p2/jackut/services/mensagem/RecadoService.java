@@ -50,4 +50,13 @@ public class RecadoService extends MensagemBaseService {
         usuarioService.salvarDados();
         return recado;
     }
+
+    public void removerRecados(String login) {
+        // Remove todos os recados enviados do usuário
+        for (Usuario usuario : usuarioService.getTodosUsuarios()) {
+            usuarioService.removerRecados(usuario.getLogin(), login);
+        }
+
+        usuarioService.salvarDados();
+    }
 }
