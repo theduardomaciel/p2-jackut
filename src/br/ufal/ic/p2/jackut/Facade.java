@@ -8,6 +8,9 @@ public class Facade {
     private final AmizadeService amizadeService;
     private final RecadoService recadoService;
     private final ComunidadeService comunidadeService;
+    private final IdoloService idoloService;
+    private final PaqueraService paqueraService;
+    private final InimizadeService inimizadeService;
 
     public Facade() {
         this.usuarioService = UsuarioService.getInstance();
@@ -15,6 +18,9 @@ public class Facade {
         this.amizadeService = AmizadeService.getInstance();
         this.recadoService = RecadoService.getInstance();
         this.comunidadeService = ComunidadeService.getInstance();
+        this.idoloService = IdoloService.getInstance();
+        this.paqueraService = PaqueraService.getInstance();
+        this.inimizadeService = InimizadeService.getInstance();
     }
 
     public void zerarSistema() {
@@ -97,6 +103,34 @@ public class Facade {
     public String lerMensagem(String id) {
         String login = sessaoService.getLoginUsuario(id);
         return comunidadeService.lerMensagem(login);
+    }
+
+    public void adicionarIdolo(String id, String idolo) {
+        idoloService.adicionarIdolo(id, idolo);
+    }
+
+    public boolean ehFa(String login, String idolo) {
+        return idoloService.ehFa(login, idolo);
+    }
+
+    public String getFas(String login) {
+        return idoloService.getFas(login);
+    }
+
+    public void adicionarPaquera(String id, String paquera) {
+        paqueraService.adicionarPaquera(id, paquera);
+    }
+
+    public boolean ehPaquera(String id, String paquera) {
+        return paqueraService.ehPaquera(id, paquera);
+    }
+
+    public String getPaqueras(String id) {
+        return paqueraService.getPaqueras(id);
+    }
+
+    public void adicionarInimigo(String id, String inimigo) {
+        inimizadeService.adicionarInimigo(id, inimigo);
     }
 
     public void encerrarSistema() {

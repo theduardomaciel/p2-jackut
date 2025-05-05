@@ -3,6 +3,7 @@ package br.ufal.ic.p2.jackut.services;
 import br.ufal.ic.p2.jackut.exceptions.amizade.AmizadeJaExistenteException;
 import br.ufal.ic.p2.jackut.exceptions.amizade.AmizadeParaSiMesmoException;
 import br.ufal.ic.p2.jackut.exceptions.amizade.ConviteJaEnviadoException;
+import br.ufal.ic.p2.jackut.exceptions.inimizade.InteracaoComInimigoException;
 import br.ufal.ic.p2.jackut.exceptions.usuario.UsuarioNaoCadastradoException;
 import br.ufal.ic.p2.jackut.models.Usuario;
 
@@ -30,6 +31,10 @@ public class AmizadeService {
 
         Usuario usuario = usuarioService.getUsuario(login);
         Usuario amigo = usuarioService.getUsuario(amigoLogin);
+
+        if (usuario.ehInimigo(amigoLogin) || amigo.ehInimigo(login)) {
+            throw new InteracaoComInimigoException(amigo.getAtributo("nome"));
+        }
 
         if (usuario.ehAmigo(amigoLogin)) {
             throw new AmizadeJaExistenteException();
@@ -59,7 +64,7 @@ public class AmizadeService {
     public String getAmigos(String login) {
         Usuario usuario = usuarioService.getUsuario(login);
         var amigos = usuario.getAmigos();
-        
+
         if (amigos.isEmpty()) {
             return "{}";
         }

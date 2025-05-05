@@ -74,20 +74,6 @@ public class ComunidadeService {
         comunidade.adicionarMensagem(mensagem, loginRemetente);
     }
 
-    // Outro método, caso a verificação de membro seja necessária no futuro
-    /*public void enviarMensagem(String nome, String loginRemetente, String mensagem) {
-        Comunidade comunidade = getComunidade(nome);
-        Usuario remetente = usuarioService.getUsuario(loginRemetente);
-
-        // Verifica se o remetente é membro da comunidade
-        if (!comunidade.contemMembro(remetente)) {
-            throw new UsuarioNaoMembroException();
-        }
-
-        comunidade.adicionarMensagem(mensagem, loginRemetente);
-        usuarioService.salvarDados();
-    }*/
-
     public String lerMensagem(String login) {
         // Procura a mensagem em todas as comunidades
         for (Comunidade comunidade : comunidades.values()) {

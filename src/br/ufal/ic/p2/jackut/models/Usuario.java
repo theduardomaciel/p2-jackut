@@ -24,6 +24,9 @@ public class Usuario implements Serializable {
     private List<String> convitesEnviados;
     private Queue<String> recados;
     private List<String> comunidades;
+    private List<String> idolos;
+    private List<String> paqueras;
+    private List<String> inimigos;
 
     public Usuario(String login, String senha, String nome) {
         this.login = login;
@@ -34,6 +37,9 @@ public class Usuario implements Serializable {
         this.convitesEnviados = new ArrayList<>();
         this.recados = new LinkedList<>();
         this.comunidades = new ArrayList<>();
+        this.idolos = new ArrayList<>();
+        this.paqueras = new ArrayList<>();
+        this.inimigos = new ArrayList<>();
     }
 
     public String getLogin() {
@@ -67,7 +73,7 @@ public class Usuario implements Serializable {
      * Define o valor de um atributo do usuário.
      *
      * @param atributo O nome do atributo.
-     * @param valor O novo valor do atributo.
+     * @param valor    O novo valor do atributo.
      */
     public void setAtributo(String atributo, String valor) {
         if (atributo.equalsIgnoreCase("nome")) {
@@ -165,5 +171,43 @@ public class Usuario implements Serializable {
 
     public List<String> getComunidades() {
         return Collections.unmodifiableList(comunidades);
+    }
+
+    public boolean ehFa(String idolo) {
+        return idolos.contains(idolo);
+    }
+
+    public void adicionarIdolo(String idolo) {
+        if (!idolos.contains(idolo)) {
+            idolos.add(idolo);
+        }
+    }
+
+    public List<String> getFas() {
+        return Collections.unmodifiableList(idolos);
+    }
+
+    public boolean ehPaquera(String paquera) {
+        return paqueras.contains(paquera);
+    }
+
+    public void adicionarPaquera(String paquera) {
+        if (!paqueras.contains(paquera)) {
+            paqueras.add(paquera);
+        }
+    }
+
+    public List<String> getPaqueras() {
+        return Collections.unmodifiableList(paqueras);
+    }
+
+    public void adicionarInimigo(String inimigo) {
+        if (!inimigos.contains(inimigo)) {
+            inimigos.add(inimigo);
+        }
+    }
+
+    public boolean ehInimigo(String inimigo) {
+        return inimigos.contains(inimigo);
     }
 }

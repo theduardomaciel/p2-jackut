@@ -9,6 +9,8 @@ import br.ufal.ic.p2.jackut.persistance.Database;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Collection;
+import java.util.Collections;
 
 public class UsuarioService {
     private static UsuarioService instance;
@@ -25,7 +27,7 @@ public class UsuarioService {
         }
     }
 
-    // Método para obter a instância única
+    // M?todo para obter a instãncia única
     public static synchronized UsuarioService getInstance() {
         if (instance == null) {
             instance = new UsuarioService();
@@ -57,7 +59,7 @@ public class UsuarioService {
     }
 
     public String getAtributoUsuario(String login, String atributo) {
-        Usuario usuario = getUsuario(login); // Lança "Usuário não cadastrado" se o login não existir
+        Usuario usuario = getUsuario(login); // Lan?a "Usu?rio n?o cadastrado" se o login n?o existir
         return usuario.getAtributo(atributo);
     }
 
@@ -68,7 +70,9 @@ public class UsuarioService {
     }
 
     public Usuario getUsuario(String login) {
-        if (!usuarios.containsKey(login)) {
+        if (!usuarios.containsKey(login) && !login.equals("Jackut")) {
+            // System.out.println("Usuário de login " + login + " não encontrado.");
+            // System.out.println("Usuários atuais: " + usuarios.keySet());
             throw new UsuarioNaoCadastradoException();
         }
         return usuarios.get(login);
@@ -86,5 +90,9 @@ public class UsuarioService {
 
     public void salvarDados() {
         db.salvarDados(usuarios);
+    }
+
+    public Collection<Usuario> getTodosUsuarios() {
+        return Collections.unmodifiableCollection(usuarios.values());
     }
 }
