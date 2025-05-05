@@ -1,7 +1,7 @@
 package br.ufal.ic.p2.jackut.services;
 
-import br.ufal.ic.p2.jackut.exceptions.ComunidadeExistenteException;
-import br.ufal.ic.p2.jackut.exceptions.ComunidadeNaoExisteException;
+import br.ufal.ic.p2.jackut.exceptions.comunidade.ComunidadeExistenteException;
+import br.ufal.ic.p2.jackut.exceptions.comunidade.ComunidadeNaoExisteException;
 import br.ufal.ic.p2.jackut.models.Comunidade;
 import br.ufal.ic.p2.jackut.models.Usuario;
 import java.util.HashMap;

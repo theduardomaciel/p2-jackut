@@ -1,4 +1,4 @@
-package br.ufal.ic.p2.jackut.exceptions;
+package br.ufal.ic.p2.jackut.exceptions.comunidade;
 
 public class ComunidadeExistenteException extends RuntimeException {
     public ComunidadeExistenteException() {

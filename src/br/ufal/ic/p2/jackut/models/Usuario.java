@@ -1,6 +1,6 @@
 package br.ufal.ic.p2.jackut.models;
 
-import br.ufal.ic.p2.jackut.exceptions.AtributoNaoPreenchidoException;
+import br.ufal.ic.p2.jackut.exceptions.usuario.AtributoNaoPreenchidoException;
 
 import java.io.Serial;
 import java.io.Serializable;

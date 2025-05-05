@@ -1,6 +1,7 @@
 package br.ufal.ic.p2.jackut.services;
 
-import br.ufal.ic.p2.jackut.exceptions.*;
+import br.ufal.ic.p2.jackut.exceptions.recado.RecadoNaoEncontradoException;
+import br.ufal.ic.p2.jackut.exceptions.recado.RecadoParaSiMesmoException;
 import br.ufal.ic.p2.jackut.models.Usuario;
 
 public class RecadoService {

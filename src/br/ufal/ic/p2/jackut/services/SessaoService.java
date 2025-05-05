@@ -1,6 +1,8 @@
 package br.ufal.ic.p2.jackut.services;
 
-import br.ufal.ic.p2.jackut.exceptions.*;
+import br.ufal.ic.p2.jackut.exceptions.sessao.SessaoNaoEncontradaException;
+import br.ufal.ic.p2.jackut.exceptions.usuario.LoginOuSenhaInvalidosException;
+import br.ufal.ic.p2.jackut.exceptions.usuario.UsuarioNaoCadastradoException;
 import br.ufal.ic.p2.jackut.models.Usuario;
 
 import java.util.HashMap;

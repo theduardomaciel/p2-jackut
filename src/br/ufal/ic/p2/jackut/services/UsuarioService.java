@@ -1,6 +1,9 @@
 package br.ufal.ic.p2.jackut.services;
 
-import br.ufal.ic.p2.jackut.exceptions.*;
+import br.ufal.ic.p2.jackut.exceptions.usuario.ContaExistenteException;
+import br.ufal.ic.p2.jackut.exceptions.usuario.LoginInvalidoException;
+import br.ufal.ic.p2.jackut.exceptions.usuario.SenhaInvalidaException;
+import br.ufal.ic.p2.jackut.exceptions.usuario.UsuarioNaoCadastradoException;
 import br.ufal.ic.p2.jackut.models.Usuario;
 import br.ufal.ic.p2.jackut.persistance.Database;
 

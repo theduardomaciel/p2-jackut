@@ -1,6 +1,9 @@
 package br.ufal.ic.p2.jackut.services;
 
-import br.ufal.ic.p2.jackut.exceptions.*;
+import br.ufal.ic.p2.jackut.exceptions.amizade.AmizadeJaExistenteException;
+import br.ufal.ic.p2.jackut.exceptions.amizade.AmizadeParaSiMesmoException;
+import br.ufal.ic.p2.jackut.exceptions.amizade.ConviteJaEnviadoException;
+import br.ufal.ic.p2.jackut.exceptions.usuario.UsuarioNaoCadastradoException;
 import br.ufal.ic.p2.jackut.models.Usuario;
 
 public class AmizadeService {
