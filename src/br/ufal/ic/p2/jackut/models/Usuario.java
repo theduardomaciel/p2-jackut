@@ -20,9 +20,9 @@ public class Usuario implements Serializable {
     private String nome;
     private Map<String, String> atributos;
 
-    private AmizadeRelacao amizades;
     private Queue<Mensagem> recados;
 
+    private AmizadeRelacao amizades;
     private ListaRelacao comunidades;
     private ListaRelacao idolos;
     private ListaRelacao paqueras;

@@ -1,31 +1,25 @@
 package br.ufal.ic.p2.jackut;
 
-import br.ufal.ic.p2.jackut.services.*;
+import br.ufal.ic.p2.jackut.models.relacoes.TipoRelacionamento;
+import br.ufal.ic.p2.jackut.services.ComunidadeService;
 import br.ufal.ic.p2.jackut.services.RecadoService;
-import br.ufal.ic.p2.jackut.services.relacionamentos.AmizadeService;
-import br.ufal.ic.p2.jackut.services.relacionamentos.IdoloService;
-import br.ufal.ic.p2.jackut.services.relacionamentos.InimizadeService;
-import br.ufal.ic.p2.jackut.services.relacionamentos.PaqueraService;
+import br.ufal.ic.p2.jackut.services.SessaoService;
+import br.ufal.ic.p2.jackut.services.UsuarioService;
+import br.ufal.ic.p2.jackut.services.RelacionamentoService;
 
 public class Facade {
     private final UsuarioService usuarioService;
     private final SessaoService sessaoService;
-    private final AmizadeService amizadeService;
     private final RecadoService recadoService;
     private final ComunidadeService comunidadeService;
-    private final IdoloService idoloService;
-    private final PaqueraService paqueraService;
-    private final InimizadeService inimizadeService;
+    private final RelacionamentoService relacionamentoService;
 
     public Facade() {
         this.usuarioService = UsuarioService.getInstance();
         this.sessaoService = SessaoService.getInstance();
-        this.amizadeService = AmizadeService.getInstance();
         this.recadoService = RecadoService.getInstance();
         this.comunidadeService = ComunidadeService.getInstance();
-        this.idoloService = IdoloService.getInstance();
-        this.paqueraService = PaqueraService.getInstance();
-        this.inimizadeService = InimizadeService.getInstance();
+        this.relacionamentoService = RelacionamentoService.getInstance();
     }
 
     public void zerarSistema() {
@@ -51,17 +45,17 @@ public class Facade {
         usuarioService.editarPerfil(login, atributo, valor);
     }
 
+    // Métodos de amizade usando o novo RelacionamentoService
     public void adicionarAmigo(String id, String amigoLogin) {
-        String login = sessaoService.getLoginUsuario(id);
-        amizadeService.adicionarAmigo(login, amigoLogin);
+        relacionamentoService.adicionarRelacionamento(TipoRelacionamento.AMIZADE, id, amigoLogin);
     }
 
     public boolean ehAmigo(String login, String amigoLogin) {
-        return amizadeService.ehAmigo(login, amigoLogin);
+        return relacionamentoService.verificarRelacionamento(TipoRelacionamento.AMIZADE, login, amigoLogin);
     }
 
     public String getAmigos(String login) {
-        return amizadeService.getAmigos(login);
+        return relacionamentoService.listarRelacionamentos(TipoRelacionamento.AMIZADE, login);
     }
 
     public void enviarRecado(String id, String destinatario, String mensagem) {
@@ -110,32 +104,35 @@ public class Facade {
         return comunidadeService.lerMensagem(login);
     }
 
+    // Métodos de ídolo usando o novo RelacionamentoService
     public void adicionarIdolo(String id, String idolo) {
-        idoloService.adicionarIdolo(id, idolo);
+        relacionamentoService.adicionarRelacionamento(TipoRelacionamento.IDOLO, id, idolo);
     }
 
     public boolean ehFa(String login, String idolo) {
-        return idoloService.ehFa(login, idolo);
+        return relacionamentoService.verificarRelacionamento(TipoRelacionamento.IDOLO, login, idolo);
     }
 
     public String getFas(String login) {
-        return idoloService.getFas(login);
+        return relacionamentoService.listarRelacionamentos(TipoRelacionamento.IDOLO, login);
     }
 
+    // Métodos de paquera usando o novo RelacionamentoService
     public void adicionarPaquera(String id, String paquera) {
-        paqueraService.adicionarPaquera(id, paquera);
+        relacionamentoService.adicionarRelacionamento(TipoRelacionamento.PAQUERA, id, paquera);
     }
 
     public boolean ehPaquera(String id, String paquera) {
-        return paqueraService.ehPaquera(id, paquera);
+        return relacionamentoService.verificarRelacionamentoPorSessao(TipoRelacionamento.PAQUERA, id, paquera);
     }
 
     public String getPaqueras(String id) {
-        return paqueraService.getPaqueras(id);
+        return relacionamentoService.listarRelacionamentosPorSessao(TipoRelacionamento.PAQUERA, id);
     }
 
+    // Método de inimizade usando o novo RelacionamentoService
     public void adicionarInimigo(String id, String inimigo) {
-        inimizadeService.adicionarInimigo(id, inimigo);
+        relacionamentoService.adicionarRelacionamento(TipoRelacionamento.INIMIZADE, id, inimigo);
     }
 
     public void encerrarSistema() {
