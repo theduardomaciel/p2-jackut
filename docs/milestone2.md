@@ -7,13 +7,11 @@
 
 ## Introdução
 
----
-
 Neste segundo milestone, o sistema do Jackut foi expandido para incluir as funcionalidades das User Stories 5 a 9, mantendo o design baseado no padrão Facade e incorporando novos padrões de projeto para lidar com a crescente complexidade do sistema.
 
-## Desenvolvimento
-
 ---
+
+## Desenvolvimento
 
 A implementação das User Stories 5 a 9 exigiu a introdução de novas classes e serviços especializados, além da adaptação da arquitetura existente para acomodar as mudanças sem comprometer funcionalidades anteriores.  
 
@@ -226,9 +224,9 @@ classDiagram
     ComunidadeService --> Database : usa
 ```
 
-## Conclusão
-
 ---
+
+## Conclusão
 
 Em resumo, para a entrega desse milestone, a implementação das User Stories 5-9 seguiu os princípios de design orientado a objetos, utilizando padrões de projeto como Facade, Singleton e Strategy para criar um sistema modular, extensível e de fácil manutenção.  
 
