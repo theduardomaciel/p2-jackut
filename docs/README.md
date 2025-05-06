@@ -5,3 +5,4 @@ Cada relatório contém informações sobre o progresso do projeto, as tarefas concl
 ---
 
 1. [Relatório 1](./milestone1.md)
+2. [Relatório 2](./milestone2.md)
