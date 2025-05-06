@@ -30,29 +30,14 @@ public class Comunidade implements Serializable {
         dono.adicionarComunidade(nome);
     }
 
-    /**
-     * Retorna o nome da comunidade.
-     *
-     * @return o nome da comunidade.
-     */
     public String getNome() {
         return nome;
     }
 
-    /**
-     * Retorna a descrição da comunidade.
-     *
-     * @return a descrição da comunidade.
-     */
     public String getDescricao() {
         return descricao;
     }
 
-    /**
-     * Retorna o login do dono da comunidade.
-     *
-     * @return o login do dono da comunidade.
-     */
     public String getLoginDono() {
         return dono.getLogin();
     }

@@ -1,7 +1,7 @@
 package br.ufal.ic.p2.jackut.models.relacoes;
 
 /**
- * Enumeraç?o dos tipos de relacionamento suportados no sistema
+ * Enumeração dos tipos de relacionamento suportados no sistema
  */
 public enum TipoRelacionamento {
     AMIZADE,

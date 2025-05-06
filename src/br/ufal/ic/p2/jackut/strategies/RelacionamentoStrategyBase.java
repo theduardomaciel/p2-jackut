@@ -17,7 +17,7 @@ public abstract class RelacionamentoStrategyBase implements RelacionamentoStrate
     }
 
     /**
-     * Formata uma lista de strings para o formato padr?o
+     * Formata uma lista de strings para o formato padrão
      * 
      * @param lista Lista de strings a ser formatada
      * @return Lista formatada em {item1,item2,...}
@@ -51,7 +51,7 @@ public abstract class RelacionamentoStrategyBase implements RelacionamentoStrate
     }
 
     /**
-     * Salva as alteraç?es no banco de dados
+     * Salva as alterações no banco de dados
      */
     protected void salvarAlteracoes() {
         usuarioService.salvarDados();

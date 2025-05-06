@@ -6,7 +6,7 @@ import br.ufal.ic.p2.jackut.models.Usuario;
 import br.ufal.ic.p2.jackut.strategies.RelacionamentoStrategyBase;
 
 /**
- * Estratégia para gerenciamento da relaç?o ídolo-f?
+ * Estratégia para gerenciamento da relação ídolo-fã
  */
 public class IdoloStrategy extends RelacionamentoStrategyBase {
 
@@ -35,7 +35,7 @@ public class IdoloStrategy extends RelacionamentoStrategyBase {
 
     @Override
     public String listarRelacionamentos(String usuarioLogin) {
-        // Lista os f?s de um usuário
+        // Lista os fãs de um usuário
         var fas = usuarioService.getTodosUsuarios().stream()
                 .filter(usuario -> usuario.ehFa(usuarioLogin))
                 .map(Usuario::getLogin)

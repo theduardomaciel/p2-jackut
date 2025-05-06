@@ -33,7 +33,7 @@ public class PaqueraStrategy extends RelacionamentoStrategyBase {
 
         usuario.adicionarPaquera(paqueraLogin);
 
-        // Se ambos s?o paqueras um do outro, envia recado automático
+        // Se ambos são paqueras um do outro, envia recado automático
         if (paquera.ehPaquera(usuarioLogin)) {
             recadoService.enviarMensagem("Jackut", usuarioLogin,
                     paquera.getAtributo("nome") + " é seu paquera - Recado do Jackut.");

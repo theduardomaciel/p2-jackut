@@ -30,16 +30,16 @@ public interface RelacionamentoStrategy {
     String listarRelacionamentos(String usuarioLogin);
 
     /**
-     * Cria uma exceç?o para caso de auto-relacionamento
+     * Cria uma exceção para caso de auto-relacionamento
      * 
-     * @return A exceç?o específica para este tipo de relacionamento
+     * @return A exceção específica para este tipo de relacionamento
      */
     RuntimeException criarExcecaoAutoRelacionamento();
 
     /**
-     * Cria uma exceç?o para caso de relacionamento já existente
+     * Cria uma exceção para caso de relacionamento já existente
      * 
-     * @return A exceç?o específica para este tipo de relacionamento
+     * @return A exceção específica para este tipo de relacionamento
      */
     RuntimeException criarExcecaoRelacionamentoExistente();
 }

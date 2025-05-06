@@ -33,8 +33,7 @@ public class InimizadeStrategy extends RelacionamentoStrategyBase {
 
     @Override
     public String listarRelacionamentos(String usuarioLogin) {
-        // A implementaç?o atual n?o possui um método para listar inimigos
-        // Retornamos lista vazia como comportamento padr?o
+        // Retornamos lista vazia como comportamento padrão
         return "{}";
     }
 
