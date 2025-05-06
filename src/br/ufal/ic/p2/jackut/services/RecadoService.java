@@ -15,7 +15,13 @@ public class RecadoService {
         this.usuarioService = UsuarioService.getInstance();
     }
 
-    // Método para obter a instância única
+    /**
+     * Obtém a instância única da classe RecadoService.
+     * Implementa o padrão Singleton para garantir que apenas uma instância
+     * da classe seja criada durante a execução do programa.
+     *
+     * @return A instância única de RecadoService.
+     */
     public static synchronized RecadoService getInstance() {
         if (instance == null) {
             instance = new RecadoService();
@@ -23,6 +29,15 @@ public class RecadoService {
         return instance;
     }
 
+    /**
+     * Envia uma mensagem de um usuário para outro.
+     *
+     * @param remetente    O login do usuário que está enviando a mensagem.
+     * @param destinatario O login do usuário que receberá a mensagem.
+     * @param mensagem     O conteúdo da mensagem a ser enviada.
+     * @throws RecadoParaSiMesmoException       Se o remetente tentar enviar uma mensagem para si mesmo.
+     * @throws InteracaoComInimigoException     Se o destinatário for inimigo do remetente.
+     */
     public void enviarMensagem(String remetente, String destinatario, String mensagem) {
         if (remetente.equals(destinatario)) {
             throw new RecadoParaSiMesmoException();
@@ -38,6 +53,13 @@ public class RecadoService {
         usuarioService.salvarDados();
     }
 
+    /**
+     * Lê a mensagem mais recente de um usuário.
+     *
+     * @param login O login do usuário que deseja ler a mensagem.
+     * @return A mensagem mais recente do usuário.
+     * @throws RecadoNaoEncontradoException Se não houver mensagens disponíveis para o usuário.
+     */
     public String lerMensagem(String login) {
         Usuario usuario = usuarioService.getUsuario(login);
         String recado = usuario.lerRecado();
@@ -50,6 +72,11 @@ public class RecadoService {
         return recado;
     }
 
+    /**
+     * Remove todos os recados enviados por um usuário específico.
+     *
+     * @param login O login do usuário cujos recados enviados serão removidos.
+     */
     public void removerRecados(String login) {
         // Remove todos os recados enviados do usuário
         for (Usuario usuario : usuarioService.getTodosUsuarios()) {

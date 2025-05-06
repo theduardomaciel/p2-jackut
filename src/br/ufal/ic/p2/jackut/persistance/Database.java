@@ -13,7 +13,13 @@ public class Database {
     // Construtor privado para implementar o Singleton
     private Database() {}
 
-    // Método para obter a instância única
+    /**
+     * Obtém a instância única da classe Database.
+     * Implementa o padrão Singleton para garantir que apenas uma instância
+     * da classe seja criada durante a execução do programa.
+     *
+     * @return A instância única de Database.
+     */
     public static synchronized Database getInstance() {
         if (instance == null) {
             instance = new Database();
@@ -22,6 +28,12 @@ public class Database {
     }
 
     @SuppressWarnings("unchecked")
+    /**
+     * Carrega os dados do arquivo de banco de dados.
+     *
+     * @return Um mapa contendo os dados dos usuários. Retorna um mapa vazio
+     *         caso o arquivo não seja encontrado ou ocorra algum erro.
+     */
     public Map<String, Usuario> carregarDados() {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(DATABASE_FILE))) {
             return (Map<String, Usuario>) ois.readObject();
@@ -33,6 +45,11 @@ public class Database {
         }
     }
 
+    /**
+     * Salva os dados no arquivo de banco de dados.
+     *
+     * @param usuarios Um mapa contendo os dados dos usuários a serem salvos.
+     */
     public void salvarDados(Map<String, Usuario> usuarios) {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(DATABASE_FILE))) {
             oos.writeObject(usuarios);

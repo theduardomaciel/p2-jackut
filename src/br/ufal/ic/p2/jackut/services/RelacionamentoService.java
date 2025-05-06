@@ -12,7 +12,7 @@ import br.ufal.ic.p2.jackut.strategies.relacionamentos.PaqueraStrategy;
 
 /**
  * Serviço unificado para gerenciamento de relacionamentos
- * Implementa o padr?o Strategy para flexibilizar os diferentes tipos de
+ * Implementa o padrão Strategy para flexibilizar os diferentes tipos de
  * relacionamentos
  */
 public class RelacionamentoService {
@@ -46,7 +46,7 @@ public class RelacionamentoService {
      * 
      * @param tipo      Tipo de relacionamento (AMIZADE, PAQUERA, IDOLO ou
      *                  INIMIZADE)
-     * @param sessaoId  ID da sess?o do usuário que inicia o relacionamento
+     * @param sessaoId  ID da sessão do usuário que inicia o relacionamento
      * @param alvoLogin Login do usuário alvo
      */
     public void adicionarRelacionamento(TipoRelacionamento tipo, String sessaoId, String alvoLogin) {
@@ -70,10 +70,10 @@ public class RelacionamentoService {
     }
 
     /**
-     * Verifica se existe um relacionamento entre um usuário da sess?o e outro
+     * Verifica se existe um relacionamento entre um usuário da sessão e outro
      * 
      * @param tipo      Tipo de relacionamento a verificar
-     * @param sessaoId  ID da sess?o do usuário
+     * @param sessaoId  ID da sessão do usuário
      * @param alvoLogin Login do usuário alvo
      * @return true se o relacionamento existir, false caso contrário
      */
@@ -95,10 +95,10 @@ public class RelacionamentoService {
     }
 
     /**
-     * Lista os relacionamentos de um usuário da sess?o
+     * Lista os relacionamentos de um usuário da sessão
      * 
      * @param tipo     Tipo de relacionamento a listar
-     * @param sessaoId ID da sess?o do usuário
+     * @param sessaoId ID da sessão do usuário
      * @return Lista formatada de relacionamentos
      */
     public String listarRelacionamentosPorSessao(TipoRelacionamento tipo, String sessaoId) {

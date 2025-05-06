@@ -84,66 +84,144 @@ public class Usuario implements Serializable {
 
     // Amizades
 
+    /**
+     * Obtém a lista de amigos do usuário.
+     *
+     * @return Uma lista contendo os logins dos amigos.
+     */
     public List<String> getAmigos() {
         return amizades.listar();
     }
 
+    /**
+     * Envia um convite de amizade para outro usuário.
+     *
+     * @param loginAmigo O login do usuário para quem o convite será enviado.
+     */
     public void enviarConviteAmizade(String loginAmigo) {
         amizades.enviarConvite(loginAmigo);
     }
 
+    /**
+     * Aceita um convite de amizade de outro usuário.
+     *
+     * @param loginAmigo O login do usuário cujo convite será aceito.
+     */
     public void aceitarAmizade(String loginAmigo) {
         if (!amizades.contem(loginAmigo)) {
             amizades.adicionar(loginAmigo);
         }
     }
 
+    /**
+     * Verifica se há um convite de amizade pendente de um usuário.
+     *
+     * @param loginAmigo O login do usuário a ser verificado.
+     * @return {@code true} se houver um convite pendente, caso contrário {@code false}.
+     */
     public boolean verificarConvitePendente(String loginAmigo) {
         return amizades.temConvitePendente(loginAmigo);
     }
 
+    /**
+     * Verifica se um usuário é amigo.
+     *
+     * @param loginAmigo O login do usuário a ser verificado.
+     * @return {@code true} se o usuário for amigo, caso contrário {@code false}.
+     */
     public boolean ehAmigo(String loginAmigo) {
         return amizades.contem(loginAmigo);
     }
 
-    // Relacionamentos
-
+    /**
+     * Adiciona uma comunidade ao perfil do usuário.
+     *
+     * @param nomeComunidade O nome da comunidade a ser adicionada.
+     */
     public void adicionarComunidade(String nomeComunidade) {
         comunidades.adicionar(nomeComunidade);
     }
 
+    /**
+     * Obtém a lista de comunidades do usuário.
+     *
+     * @return Uma lista contendo os nomes das comunidades.
+     */
     public List<String> getComunidades() {
         return comunidades.listar();
     }
 
+    /**
+     * Verifica se o usuário é fã de um ídolo.
+     *
+     * @param idolo O nome do ídolo a ser verificado.
+     * @return {@code true} se o usuário for fã, caso contrário {@code false}.
+     */
     public boolean ehFa(String idolo) {
         return idolos.contem(idolo);
     }
 
+    /**
+     * Adiciona um ídolo ao perfil do usuário.
+     *
+     * @param idolo O nome do ídolo a ser adicionado.
+     */
     public void adicionarIdolo(String idolo) {
         idolos.adicionar(idolo);
     }
 
+    /**
+     * Verifica se o usuário tem um paquera.
+     *
+     * @param paquera O login do paquera a ser verificado.
+     * @return {@code true} se o usuário tiver o paquera, caso contrário {@code false}.
+     */
     public boolean ehPaquera(String paquera) {
         return paqueras.contem(paquera);
     }
 
+    /**
+     * Adiciona um paquera ao perfil do usuário.
+     *
+     * @param paquera O login do paquera a ser adicionado.
+     */
     public void adicionarPaquera(String paquera) {
         paqueras.adicionar(paquera);
     }
 
+    /**
+     * Obtém a lista de paqueras do usuário.
+     *
+     * @return Uma lista contendo os logins dos paqueras.
+     */
     public List<String> getPaqueras() {
         return paqueras.listar();
     }
 
+    /**
+     * Adiciona um inimigo ao perfil do usuário.
+     *
+     * @param inimigo O login do inimigo a ser adicionado.
+     */
     public void adicionarInimigo(String inimigo) {
         inimigos.adicionar(inimigo);
     }
 
+    /**
+     * Verifica se o usuário tem um inimigo.
+     *
+     * @param inimigo O login do inimigo a ser verificado.
+     * @return {@code true} se o usuário tiver o inimigo, caso contrário {@code false}.
+     */
     public boolean ehInimigo(String inimigo) {
         return inimigos.contem(inimigo);
     }
 
+    /**
+     * Remove uma comunidade do perfil do usuário.
+     *
+     * @param nomeComunidade O nome da comunidade a ser removida.
+     */
     public void removerComunidade(String nomeComunidade) {
         comunidades.remover(nomeComunidade);
     }
@@ -171,7 +249,11 @@ public class Usuario implements Serializable {
         return recados.poll().getConteudo();
     }
 
+    /**
+     * Remove todos os recados enviados por um usuário específico.
+     *
+     * @param login O login do remetente cujos recados serão removidos.
+     */
     public void removerRecados(String login) {
         recados.removeIf(recado -> recado.getRemetente().equals(login));
     }
-}
