@@ -257,3 +257,4 @@ public class Usuario implements Serializable {
     public void removerRecados(String login) {
         recados.removeIf(recado -> recado.getRemetente().equals(login));
     }
+}
